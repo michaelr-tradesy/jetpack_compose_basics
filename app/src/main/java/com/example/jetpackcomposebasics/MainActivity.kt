@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.compose.animation.core.Animatable
+import androidx.compose.animation.core.AnimationVector1D
 import androidx.compose.animation.core.TweenSpec
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -22,7 +23,6 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.ComposeView
-import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.*
@@ -31,11 +31,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.ExperimentalUnitApi
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.LifecycleOwner
 import com.example.jetpackcomposebasics.ui.theme.JetpackComposeBasicsTheme
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
-import java.lang.Math.abs
 import kotlin.math.roundToInt
 
 
@@ -43,16 +41,36 @@ import kotlin.math.roundToInt
 class MainActivity : ComponentActivity() {
 
     private enum class Type {
+        None,
+        Alert,
+        TopAppBar,
+        BadgeBox,
+        Button,
+        Card,
+        Checkbox,
+        CircularProgress,
+        CustomView,
+        DropDownList,
+        EditTextField,
+        LinearProgress,
+        ModalBottomSheetLayout,
+        ModalDrawer,
+        RadioButton,
+        Slider,
+        RangeSlider,
         SnackBar,
-        None
+        Surface,
+        TextField,
+        Switch,
     }
 
     private lateinit var scaffoldState: ScaffoldState
-    private lateinit var scope: CoroutineScope
+    private lateinit var coroutineScope: CoroutineScope
     private lateinit var clickCount: MutableState<Int>
-//    private lateinit var animatedProgress : MutableState<Animatable>
+    private lateinit var animatedProgress: Animatable<Float, AnimationVector1D>
 
-    private val showDialog = mutableStateOf(Type.None)
+    private val openDialog = mutableStateOf(true)
+    private val exampleType = mutableStateOf(Type.None)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -82,23 +100,27 @@ class MainActivity : ComponentActivity() {
         // Consider negative values to mean 'cut corner' and positive values to mean 'round corner'
         val sharpEdgePercent = -50f
         val roundEdgePercent = 45f
-// Start with sharp edges
+        // Start with sharp edges
         val animatedProgress = remember { Animatable(sharpEdgePercent) }
-// Create a coroutineScope for the animation
-        val coroutineScope = rememberCoroutineScope()
-// animation value to animate shape
+        // Create a coroutineScope for the animation
+        coroutineScope = rememberCoroutineScope()
+        // animation value to animate shape
         val progress = animatedProgress.value.roundToInt()
 
-// When progress is 0, there is no modification to the edges so we are just drawing a rectangle.
-// This allows for a smooth transition between cut corners and round corners.
-        val fabShape = if (progress < 0) {
-            CutCornerShape(abs(progress))
-        } else if (progress == roundEdgePercent.toInt()) {
-            CircleShape
-        } else {
-            RoundedCornerShape(progress)
+        // When progress is 0, there is no modification to the edges so we are just drawing a rectangle.
+        // This allows for a smooth transition between cut corners and round corners.
+        val fabShape = when {
+            progress < 0 -> {
+                CutCornerShape(kotlin.math.abs(progress))
+            }
+            progress == roundEdgePercent.toInt() -> {
+                CircleShape
+            }
+            else -> {
+                RoundedCornerShape(progress)
+            }
         }
-// lambda to call to trigger shape animation
+        // lambda to call to trigger shape animation
         val changeShape: () -> Unit = {
             val target = animatedProgress.targetValue
             val nextTarget = if (target == roundEdgePercent) sharpEdgePercent else roundEdgePercent
@@ -110,11 +132,10 @@ class MainActivity : ComponentActivity() {
             }
         }
         scaffoldState = rememberScaffoldState()
-        scope = rememberCoroutineScope()
+        coroutineScope = rememberCoroutineScope()
         clickCount = remember { mutableStateOf(0) }
 
         MyApp {
-//        OnShowSnackBarExamples()
             Scaffold(
                 scaffoldState = scaffoldState,
                 snackbarHost = {
@@ -127,7 +148,7 @@ class MainActivity : ComponentActivity() {
                         )
                     }
                 },
-                topBar = { TopAppBar(title = { Text("Scaffold with bottom cutout") }) },
+                topBar = { TopAppBar(title = { Text("Scaffold ${exampleType.value}") }) },
                 bottomBar = {
                     BottomAppBar(cutoutShape = fabShape) {
                         IconButton(
@@ -140,7 +161,11 @@ class MainActivity : ComponentActivity() {
                     }
                 },
                 drawerContent = {
-                    Text("Drawer title", modifier = Modifier.padding(16.dp))
+
+                    Text(
+                        modifier = Modifier.padding(16.dp).clickable { showToastExample() },
+                        text = "Drawer title"
+                    )
                     Divider()
                     // Drawer items
                 },
@@ -156,30 +181,28 @@ class MainActivity : ComponentActivity() {
                 // https://github.com/Foso/Jetpack-Compose-Playground/tree/master/mysamples/src/main/java/de/jensklingenberg/jetpackcomposeplayground/mysamples/github/material
                 val list: List<Pair<String, Type>> =
                     listOf(
-                        Pair("Alert Dialog Examples", Type.None),
-                        Pair("Top App Bar Examples", Type.None),
-                        Pair("Badge Box Examples", Type.None),
-                        Pair("Button Examples", Type.None),
-                        Pair("Card Examples", Type.None),
-                        Pair("Checkbox Examples", Type.None),
-                        Pair("Circular Progress Examples", Type.None),
-                        Pair("Custom View Examples", Type.None),
-                        Pair("Drop Down List Examples", Type.None),
-                        Pair("Edit Text Field Examples", Type.None),
-                        Pair("Floating Action Button Examples", Type.None),
-                        Pair("Linear Progress Examples", Type.None),
-                        Pair("Modal Bottom Sheet Layout Examples", Type.None),
-                        Pair("Modal Drawer Examples", Type.None),
-                        Pair("Radio Button Examples", Type.None),
-                        Pair("Scaffold Examples", Type.None),
-                        Pair("Slider Examples", Type.None),
-                        Pair("Range Slider Examples", Type.None),
+                        Pair("Alert Dialog Examples", Type.Alert),
+                        Pair("Top App Bar Examples", Type.TopAppBar),
+                        Pair("Badge Box Examples", Type.BadgeBox),
+                        Pair("Button Examples", Type.Button),
+                        Pair("Card Examples", Type.Card),
+                        Pair("Checkbox Examples", Type.Checkbox),
+                        Pair("Circular Progress Examples", Type.CircularProgress),
+                        Pair("Custom View Examples", Type.CustomView),
+                        Pair("Drop Down List Examples", Type.DropDownList),
+                        Pair("Edit Text Field Examples", Type.EditTextField),
+                        Pair("Linear Progress Examples", Type.LinearProgress),
+                        Pair("Modal Bottom Sheet Layout Examples", Type.ModalBottomSheetLayout),
+                        Pair("Modal Drawer Examples", Type.ModalDrawer),
+                        Pair("Radio Button Examples", Type.RadioButton),
+                        Pair("Slider Examples", Type.Slider),
+                        Pair("Range Slider Examples", Type.RangeSlider),
                         Pair("Snack Bar Examples", Type.SnackBar),
-                        Pair("Surface Examples", Type.None),
-                        Pair("Text Field Examples", Type.None),
-                        Pair("Switch Examples", Type.None),
+                        Pair("Surface Examples", Type.Surface),
+                        Pair("Text Field Examples", Type.TextField),
+                        Pair("Switch Examples", Type.Switch),
                     )
-
+                showAlertDialogExample()
                 MyScreenContent(list)
             }
         }
@@ -189,7 +212,7 @@ class MainActivity : ComponentActivity() {
     fun BuildFloatingActionButton() {
         ExtendedFloatingActionButton(
             onClick = {
-                scope.launch {
+                coroutineScope.launch {
                     val result = scaffoldState.snackbarHostState
                         .showSnackbar(
                             message = "Snackbar # ${clickCount.value}",
@@ -218,47 +241,8 @@ class MainActivity : ComponentActivity() {
         )
     }
 
-    @Composable
-    private fun OnShowSnackBarExamples(lifecycleOwner: LifecycleOwner = LocalLifecycleOwner.current) {
-        val currentOnStart by rememberUpdatedState(true)
-
-        val snackBarHostState = remember { mutableStateOf(SnackbarHostState()) }
-
-
-//        lifecycleScope.launch {
-//            val time = System.currentTimeMillis()
-//            snackbarHostState.value.showSnackbar(
-//                message = "Hey look a snackbar",
-//                actionLabel = "Hide",
-//                duration = SnackbarDuration.Short
-//            )
-//        }
-        Surface {
-            if (showDialog.value == Type.SnackBar) {
-                SnackbarHost(
-                    hostState = snackBarHostState.value,
-                    snackbar = {
-                        Snackbar(
-                            action = {
-                                TextButton(onClick = {
-                                    snackBarHostState.value.currentSnackbarData?.dismiss()
-                                }) {
-                                    Text(
-                                        text = "Hide",
-                                    )
-                                }
-                            }
-                        ) {
-                            Text("hey look a snackbar")
-                        }
-                    }
-                )
-            }
-        }
-    }
-
-    private fun onLaunchTextExamples() {
-        Toast.makeText(this@MainActivity, "Not implemented yet...", Toast.LENGTH_SHORT).show()
+    private fun showToastExample() {
+        Toast.makeText(this@MainActivity, "Toast Example...", Toast.LENGTH_SHORT).show()
     }
 
     @Composable
@@ -278,7 +262,10 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier
                         .padding(8.dp)
                         .semantics { contentDescription = nextField.first }
-                        .clickable { showDialog.value = nextField.second }
+                        .clickable {
+                            exampleType.value = nextField.second
+                            onListItemSelected(nextField.second)
+                        }
                         .fillMaxHeight(),
                 ) {
                     val annotatedString = annotateMyString(nextField.first)
@@ -315,5 +302,70 @@ class MainActivity : ComponentActivity() {
             }
         }
         return annotatedString
+    }
+
+    @Composable
+    fun showAlertDialogExample() {
+        Column {
+            if (openDialog.value) {
+                AlertDialog(
+                    onDismissRequest = {
+                        // Dismiss the dialog when the user clicks outside the dialog or on the back
+                        // button. If you want to disable that functionality, simply use an empty
+                        // onCloseRequest.
+                        openDialog.value = false
+                    },
+                    title = {
+                        Text(text = "Dialog Title")
+                    },
+                    text = {
+                        Text("Here is a text ")
+                    },
+                    confirmButton = {
+                        Button(
+                            onClick = {
+                                openDialog.value = false
+                            }) {
+                            Text("This is the Confirm Button")
+                        }
+                    },
+                    dismissButton = {
+                        Button(
+
+                            onClick = {
+                                openDialog.value = false
+                            }) {
+                            Text("This is the dismiss Button")
+                        }
+                    }
+                )
+            }
+        }
+    }
+
+    private fun onListItemSelected(type: Type) {
+        when(type) {
+            Type.Alert -> openDialog.value = !openDialog.value
+            Type.None -> TODO()
+            Type.TopAppBar -> TODO()
+            Type.BadgeBox -> TODO()
+            Type.Button -> TODO()
+            Type.Card -> TODO()
+            Type.Checkbox -> TODO()
+            Type.CircularProgress -> TODO()
+            Type.CustomView -> TODO()
+            Type.DropDownList -> TODO()
+            Type.EditTextField -> TODO()
+            Type.LinearProgress -> TODO()
+            Type.ModalBottomSheetLayout -> TODO()
+            Type.ModalDrawer -> TODO()
+            Type.RadioButton -> TODO()
+            Type.Slider -> TODO()
+            Type.RangeSlider -> TODO()
+            Type.SnackBar -> TODO()
+            Type.Surface -> TODO()
+            Type.TextField -> TODO()
+            Type.Switch -> TODO()
+        }
     }
 }
