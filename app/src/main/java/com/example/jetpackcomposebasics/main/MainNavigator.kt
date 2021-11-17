@@ -6,6 +6,7 @@ import android.os.Bundle
 import androidx.compose.ui.unit.ExperimentalUnitApi
 import com.example.jetpackcomposebasics.buttonexamples.ButtonExamplesActivity
 import com.example.jetpackcomposebasics.main.divider.DividerExamplesActivity
+import com.example.jetpackcomposebasics.main.floatingactionbuttons.FloatingActionButtonExamplesActivity
 import com.example.jetpackcomposebasics.main.listofbuttons.ListOfButtonsExampleActivity
 
 interface MainNavigator {
@@ -25,6 +26,8 @@ interface MainNavigator {
 
     fun showListExamples(context: Context)
     fun showDividerExamples(context: Context)
+    fun showFloatingActionButtonExamples(context: Context)
+    fun showExtendedFloatingActionButtonExamples(context: Context)
 }
 
 @ExperimentalUnitApi
@@ -54,6 +57,26 @@ class DefaultMainNavigator: MainNavigator {
         navigate(
             applicationContext = context,
             clazz = DividerExamplesActivity::class.java,
+            bundle = bundle,
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK
+        )
+    }
+
+    override fun showFloatingActionButtonExamples(context: Context) {
+        val bundle = Bundle()
+        navigate(
+            applicationContext = context,
+            clazz = FloatingActionButtonExamplesActivity::class.java,
+            bundle = bundle,
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK
+        )
+    }
+
+    override fun showExtendedFloatingActionButtonExamples(context: Context) {
+        val bundle = Bundle()
+        navigate(
+            applicationContext = context,
+            clazz = ExtendedFloatingActionButtonExamplesActivity::class.java,
             bundle = bundle,
             flags = Intent.FLAG_ACTIVITY_NEW_TASK
         )

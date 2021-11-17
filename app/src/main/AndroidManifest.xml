@@ -24,6 +24,8 @@
         <activity android:name=".buttonexamples.ButtonExamplesActivity" />
         <activity android:name=".main.listofbuttons.ListOfButtonsExampleActivity" />
         <activity android:name=".main.divider.DividerExamplesActivity" />
+        <activity android:name=".main.floatingactionbuttons.FloatingActionButtonExamplesActivity" />
+        <activity android:name=".main.ExtendedFloatingActionButtonExamplesActivity" />
     </application>
 
 </manifest>

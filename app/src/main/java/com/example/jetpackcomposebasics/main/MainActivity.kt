@@ -52,6 +52,8 @@ class MainActivity : DefaultActivity() {
         Divider,
         DropDownList,
         EditTextField,
+        ExtendedFloatingActionButton,
+        FloatingActionButton,
         List,
         LinearProgress,
         ModalBottomSheetLayout,
@@ -187,6 +189,8 @@ class MainActivity : DefaultActivity() {
                         Pair("Divider Examples", Type.Divider),
                         Pair("Drop Down List Examples", Type.DropDownList),
                         Pair("Edit Text Field Examples", Type.EditTextField),
+                        Pair("Extended Floating Action Button Examples", Type.ExtendedFloatingActionButton),
+                        Pair("Floating Action Button Examples", Type.FloatingActionButton),
                         Pair("Linear Progress Examples", Type.LinearProgress),
                         Pair("List of Buttons Examples", Type.List),
                         Pair("Modal Bottom Sheet Layout Examples", Type.ModalBottomSheetLayout),
@@ -300,7 +304,7 @@ class MainActivity : DefaultActivity() {
     }
 
     @Composable
-    fun showAlertDialogExample() {
+    private fun showAlertDialogExample() {
         Column {
             if (openDialog.value) {
                 AlertDialog(
@@ -352,6 +356,8 @@ class MainActivity : DefaultActivity() {
             Type.Divider -> viewModel.showDividerExamples(context = this.applicationContext)
             Type.DropDownList -> TODO()
             Type.EditTextField -> TODO()
+            Type.ExtendedFloatingActionButton -> viewModel.showExtendedFloatingActionButtonExamples(context = this.applicationContext)
+            Type.FloatingActionButton -> viewModel.showFloatingActionButtonExamples(context = this.applicationContext)
             Type.LinearProgress -> TODO()
             Type.List -> viewModel.showListExamples(this)
             Type.ModalBottomSheetLayout -> TODO()
