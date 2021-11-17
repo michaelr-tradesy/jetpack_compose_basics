@@ -1,9 +1,8 @@
-package com.example.jetpackcomposebasics
+package com.example.jetpackcomposebasics.main
 
 import android.content.res.Configuration
 import android.os.Bundle
 import android.widget.Toast
-import androidx.activity.ComponentActivity
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.AnimationVector1D
 import androidx.compose.animation.core.TweenSpec
@@ -16,13 +15,13 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.CutCornerShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
+import androidx.compose.material.FloatingActionButtonDefaults.elevation
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.*
@@ -31,6 +30,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.ExperimentalUnitApi
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.jetpackcomposebasics.DefaultActivity
 import com.example.jetpackcomposebasics.ui.theme.JetpackComposeBasicsTheme
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -38,20 +38,21 @@ import kotlin.math.roundToInt
 
 
 @ExperimentalUnitApi
-class MainActivity : ComponentActivity() {
+class MainActivity : DefaultActivity() {
 
     private enum class Type {
         None,
         Alert,
-        TopAppBar,
         BadgeBox,
         Button,
         Card,
         Checkbox,
         CircularProgress,
         CustomView,
+        Divider,
         DropDownList,
         EditTextField,
+        List,
         LinearProgress,
         ModalBottomSheetLayout,
         ModalDrawer,
@@ -60,6 +61,7 @@ class MainActivity : ComponentActivity() {
         RangeSlider,
         SnackBar,
         Surface,
+        TopAppBar,
         TextField,
         Switch,
     }
@@ -68,18 +70,10 @@ class MainActivity : ComponentActivity() {
     private lateinit var coroutineScope: CoroutineScope
     private lateinit var clickCount: MutableState<Int>
     private lateinit var animatedProgress: Animatable<Float, AnimationVector1D>
+    private lateinit var viewModel: MainViewModel
 
     private val openDialog = mutableStateOf(true)
     private val exampleType = mutableStateOf(Type.None)
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        ComposeView(this).also {
-            setContentView(it)
-        }.setContent {
-            DefaultPreview()
-        }
-    }
 
     @Preview(
         fontScale = 1.5f,
@@ -96,7 +90,8 @@ class MainActivity : ComponentActivity() {
         showBackground = true
     )
     @Composable
-    private fun DefaultPreview() {
+    override fun DefaultPreview() {
+        viewModel = DefaultMainViewModel()
         // Consider negative values to mean 'cut corner' and positive values to mean 'round corner'
         val sharpEdgePercent = -50f
         val roundEdgePercent = 45f
@@ -189,9 +184,11 @@ class MainActivity : ComponentActivity() {
                         Pair("Checkbox Examples", Type.Checkbox),
                         Pair("Circular Progress Examples", Type.CircularProgress),
                         Pair("Custom View Examples", Type.CustomView),
+                        Pair("Divider Examples", Type.Divider),
                         Pair("Drop Down List Examples", Type.DropDownList),
                         Pair("Edit Text Field Examples", Type.EditTextField),
                         Pair("Linear Progress Examples", Type.LinearProgress),
+                        Pair("List of Buttons Examples", Type.List),
                         Pair("Modal Bottom Sheet Layout Examples", Type.ModalBottomSheetLayout),
                         Pair("Modal Drawer Examples", Type.ModalDrawer),
                         Pair("Radio Button Examples", Type.RadioButton),
@@ -211,6 +208,8 @@ class MainActivity : ComponentActivity() {
     @Composable
     fun BuildFloatingActionButton() {
         ExtendedFloatingActionButton(
+            modifier = Modifier,
+            elevation = elevation(),
             onClick = {
                 coroutineScope.launch {
                     val result = scaffoldState.snackbarHostState
@@ -239,10 +238,6 @@ class MainActivity : ComponentActivity() {
             },
             text = { Text("Like") }
         )
-    }
-
-    private fun showToastExample() {
-        Toast.makeText(this@MainActivity, "Toast Example...", Toast.LENGTH_SHORT).show()
     }
 
     @Composable
@@ -349,14 +344,16 @@ class MainActivity : ComponentActivity() {
             Type.None -> TODO()
             Type.TopAppBar -> TODO()
             Type.BadgeBox -> TODO()
-            Type.Button -> TODO()
+            Type.Button -> viewModel.showButtonExamples(this)
             Type.Card -> TODO()
             Type.Checkbox -> TODO()
             Type.CircularProgress -> TODO()
             Type.CustomView -> TODO()
+            Type.Divider -> viewModel.showDividerExamples(context = this.applicationContext)
             Type.DropDownList -> TODO()
             Type.EditTextField -> TODO()
             Type.LinearProgress -> TODO()
+            Type.List -> viewModel.showListExamples(this)
             Type.ModalBottomSheetLayout -> TODO()
             Type.ModalDrawer -> TODO()
             Type.RadioButton -> TODO()

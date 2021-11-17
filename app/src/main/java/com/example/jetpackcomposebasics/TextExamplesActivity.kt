@@ -56,7 +56,6 @@ class TextExamplesActivity : ComponentActivity() {
     private fun DefaultPreview() {
         MyApp {
             MyScreenContent()
-            buildAlertDialog()
         }
     }
 

@@ -1,25 +1,28 @@
-package com.example.jetpackcomposebasics
+package com.example.jetpackcomposebasics.main.listofbuttons
 
+import android.R
 import android.content.res.Configuration
-import android.os.Bundle
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.*
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -28,18 +31,18 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.ExperimentalUnitApi
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.jetpackcomposebasics.DefaultActivity
+import com.example.jetpackcomposebasics.buttonexamples.ButtonExamplesViewModel
+import com.example.jetpackcomposebasics.buttonexamples.DefaultButtonExamplesViewModel
 import com.example.jetpackcomposebasics.ui.theme.JetpackComposeBasicsTheme
+import kotlin.math.abs
 import kotlin.random.Random
 
 
 @ExperimentalUnitApi
-class ButtonExampleActivity : ComponentActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContent {
-            DefaultPreview()
-        }
-    }
+class ListOfButtonsExampleActivity : DefaultActivity() {
+
+    private lateinit var viewModel: ButtonExamplesViewModel
 
     @Preview(
         fontScale = 1.5f,
@@ -56,7 +59,8 @@ class ButtonExampleActivity : ComponentActivity() {
         showBackground = true
     )
     @Composable
-    private fun DefaultPreview() {
+    override fun DefaultPreview() {
+        viewModel = DefaultButtonExamplesViewModel()
         MyApp {
             MyScreenContent()
         }
@@ -80,13 +84,15 @@ class ButtonExampleActivity : ComponentActivity() {
         Column(modifier = Modifier.fillMaxHeight()) {
             NamesList(
                 names = names,
-                modifier = Modifier.weight(1f).padding(start = 16.dp, top = 16.dp, end = 16.dp, bottom = 16.dp),
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(start = 16.dp, top = 16.dp, end = 16.dp, bottom = 16.dp),
                 callback = { value ->
                     total = value
                 }
             )
             if (total > 5) {
-                Text(text = "I love to count")
+                Text(text = "I love to count. New Random Number=[$total]")
             }
         }
     }
@@ -99,7 +105,7 @@ class ButtonExampleActivity : ComponentActivity() {
                 val annotatedString = buildAnnotatedString {
                     withStyle(style = ParagraphStyle(lineHeight = 30.sp)) {
                         withStyle(style = SpanStyle(color = Color(108, 196, 23, 255))) {
-                            append("[Start Annotated Text] \n")
+                            append("[Start]")
                         }
                         withStyle(
                             style = SpanStyle(
@@ -107,7 +113,7 @@ class ButtonExampleActivity : ComponentActivity() {
                                 color = Color(253, 208, 23 , 255)
                             )
                         ) {
-                            append("$it\n")
+                            append(it)
                         }
                         withStyle(
                             style = SpanStyle(
@@ -115,7 +121,7 @@ class ButtonExampleActivity : ComponentActivity() {
                                 color = Color(113, 24, 196 , 255)
                             )
                         ) {
-                            append("[ENd Annotated Text]")
+                            append("[End]")
                         }
                     }
                 }
@@ -131,9 +137,9 @@ class ButtonExampleActivity : ComponentActivity() {
                         )
                     ),
                     onClick = {
-                    println("Clicked=[${annotatedString.text}]")
-                    callback.invoke(kotlin.math.abs(Random.nextInt()))
-                },
+                        println("Clicked=[${annotatedString.text}]")
+                        callback.invoke(abs(Random.nextInt()))
+                    },
                     content = {
                         MySpannedString(text = annotatedString)
                     })
@@ -142,6 +148,38 @@ class ButtonExampleActivity : ComponentActivity() {
 
         }
     }
+
+    @Composable
+    fun IconToggleButtonBuild(
+        checked: Boolean?,
+        enabled: Boolean?,
+        modifier: Modifier?
+    ) {
+        IconToggleButton(
+//            onCheckedChange: (Boolean) -> Unit,
+//        modifier: Modifier = Modifier,
+//        interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
+//        content: @Composable () -> Unit
+            modifier = modifier ?: Modifier.padding(0.dp),
+            checked = checked ?: false,
+            onCheckedChange = {
+
+            },
+            enabled = enabled ?: false
+        ) {
+            Image(
+                painter = painterResource(R.drawable.ic_delete),
+                contentDescription = "Icon Toggle Button",
+                modifier = Modifier
+                    // Set image size to 40 dp
+                    .size(40.dp)
+                    // Clip image to be shaped as a circle
+                    .clip(CircleShape)
+                    .border(1.5.dp, MaterialTheme.colors.secondary, CircleShape)
+            )
+        }
+    }
+
     @Composable
     private fun BuildButton(
         modifier: Modifier = Modifier,

@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.JetpackComposeBasics">
         <activity
-            android:name=".MainActivity"
+            android:name=".main.MainActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.JetpackComposeBasics.NoActionBar">
@@ -21,6 +21,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".DataActivity" />
+        <activity android:name=".buttonexamples.ButtonExamplesActivity" />
+        <activity android:name=".main.listofbuttons.ListOfButtonsExampleActivity" />
+        <activity android:name=".main.divider.DividerExamplesActivity" />
     </application>
 
 </manifest>
