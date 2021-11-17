@@ -30,6 +30,7 @@ interface MainNavigator {
     fun showExtendedFloatingActionButtonExamples(context: Context)
     fun showRadioButtonExamples(context: Context)
     fun showProgressIndicatorExamples(context: Context)
+    fun showCheckboxExamples(context: Context)
 }
 
 @ExperimentalUnitApi
@@ -99,6 +100,16 @@ class DefaultMainNavigator: MainNavigator {
         navigate(
             applicationContext = context,
             clazz = ProgressIndicatorExamplesActivity::class.java,
+            bundle = bundle,
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK
+        )
+    }
+
+    override fun showCheckboxExamples(context: Context) {
+        val bundle = Bundle()
+        navigate(
+            applicationContext = context,
+            clazz = CheckboxExamplesActivity::class.java,
             bundle = bundle,
             flags = Intent.FLAG_ACTIVITY_NEW_TASK
         )

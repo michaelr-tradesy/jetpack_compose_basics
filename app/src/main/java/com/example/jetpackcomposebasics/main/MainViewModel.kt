@@ -11,7 +11,7 @@ interface MainViewModel {
     fun showExtendedFloatingActionButtonExamples(context: Context)
     fun showRadioButtonExamples(context: Context)
     fun showProgressIndicatorExamples(context: Context)
-
+    fun showCheckboxExamples(context: Context)
 }
 
 class DefaultMainViewModel @ExperimentalUnitApi constructor(
@@ -43,5 +43,9 @@ class DefaultMainViewModel @ExperimentalUnitApi constructor(
 
     override fun showProgressIndicatorExamples(context: Context) {
         navigator.showProgressIndicatorExamples(context)
+    }
+
+    override fun showCheckboxExamples(context: Context) {
+        navigator.showCheckboxExamples(context)
     }
 }

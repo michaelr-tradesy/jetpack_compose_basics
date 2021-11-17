@@ -347,7 +347,7 @@ class MainActivity : DefaultActivity() {
             Type.BadgeBox -> showToastExample()
             Type.Button -> viewModel.showButtonExamples(this)
             Type.Card -> showToastExample()
-            Type.Checkbox -> showToastExample()
+            Type.Checkbox -> viewModel.showCheckboxExamples(context = this.applicationContext)
             Type.CustomView -> showToastExample()
             Type.Divider -> viewModel.showDividerExamples(context = this.applicationContext)
             Type.DropDownList -> showToastExample()

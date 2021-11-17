@@ -28,6 +28,7 @@
         <activity android:name=".main.ExtendedFloatingActionButtonExamplesActivity" />
         <activity android:name=".main.RadioButtonExamplesActivity" />
         <activity android:name=".main.ProgressIndicatorExamplesActivity" />
+        <activity android:name=".main.CheckboxExamplesActivity" />
     </application>
 
 </manifest>
