@@ -47,7 +47,6 @@ class MainActivity : DefaultActivity() {
         Button,
         Card,
         Checkbox,
-        CircularProgress,
         CustomView,
         Divider,
         DropDownList,
@@ -55,9 +54,9 @@ class MainActivity : DefaultActivity() {
         ExtendedFloatingActionButton,
         FloatingActionButton,
         List,
-        LinearProgress,
         ModalBottomSheetLayout,
         ModalDrawer,
+        ProgressIndicator,
         RadioButton,
         Slider,
         RangeSlider,
@@ -183,17 +182,16 @@ class MainActivity : DefaultActivity() {
                         Pair("Button Examples", Type.Button),
                         Pair("Card Examples", Type.Card),
                         Pair("Checkbox Examples", Type.Checkbox),
-                        Pair("Circular Progress Examples", Type.CircularProgress),
                         Pair("Custom View Examples", Type.CustomView),
                         Pair("Divider Examples", Type.Divider),
                         Pair("Drop Down List Examples", Type.DropDownList),
                         Pair("Edit Text Field Examples", Type.EditTextField),
                         Pair("Extended Floating Action Button Examples", Type.ExtendedFloatingActionButton),
                         Pair("Floating Action Button Examples", Type.FloatingActionButton),
-                        Pair("Linear Progress Examples", Type.LinearProgress),
                         Pair("List of Buttons Examples", Type.List),
                         Pair("Modal Bottom Sheet Layout Examples", Type.ModalBottomSheetLayout),
                         Pair("Modal Drawer Examples", Type.ModalDrawer),
+                        Pair("Progress Indicator Examples", Type.ProgressIndicator),
                         Pair("Radio Button Examples", Type.RadioButton),
                         Pair("Slider Examples", Type.Slider),
                         Pair("Range Slider Examples", Type.RangeSlider),
@@ -350,17 +348,16 @@ class MainActivity : DefaultActivity() {
             Type.Button -> viewModel.showButtonExamples(this)
             Type.Card -> showToastExample()
             Type.Checkbox -> showToastExample()
-            Type.CircularProgress -> showToastExample()
             Type.CustomView -> showToastExample()
             Type.Divider -> viewModel.showDividerExamples(context = this.applicationContext)
             Type.DropDownList -> showToastExample()
             Type.EditTextField -> showToastExample()
             Type.ExtendedFloatingActionButton -> viewModel.showExtendedFloatingActionButtonExamples(context = this.applicationContext)
             Type.FloatingActionButton -> viewModel.showFloatingActionButtonExamples(context = this.applicationContext)
-            Type.LinearProgress -> showToastExample()
             Type.List -> viewModel.showListExamples(this)
             Type.ModalBottomSheetLayout -> showToastExample()
             Type.ModalDrawer -> showToastExample()
+            Type.ProgressIndicator -> viewModel.showProgressIndicatorExamples(context = this.applicationContext)
             Type.RadioButton -> viewModel.showRadioButtonExamples(context = this.applicationContext)
             Type.Slider -> showToastExample()
             Type.RangeSlider -> showToastExample()

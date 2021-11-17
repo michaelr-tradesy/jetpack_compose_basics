@@ -29,6 +29,7 @@ interface MainNavigator {
     fun showFloatingActionButtonExamples(context: Context)
     fun showExtendedFloatingActionButtonExamples(context: Context)
     fun showRadioButtonExamples(context: Context)
+    fun showProgressIndicatorExamples(context: Context)
 }
 
 @ExperimentalUnitApi
@@ -88,6 +89,16 @@ class DefaultMainNavigator: MainNavigator {
         navigate(
             applicationContext = context,
             clazz = RadioButtonExamplesActivity::class.java,
+            bundle = bundle,
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK
+        )
+    }
+
+    override fun showProgressIndicatorExamples(context: Context) {
+        val bundle = Bundle()
+        navigate(
+            applicationContext = context,
+            clazz = ProgressIndicatorExamplesActivity::class.java,
             bundle = bundle,
             flags = Intent.FLAG_ACTIVITY_NEW_TASK
         )
