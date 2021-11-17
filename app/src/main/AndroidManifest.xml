@@ -29,6 +29,7 @@
         <activity android:name=".main.RadioButtonExamplesActivity" />
         <activity android:name=".main.ProgressIndicatorExamplesActivity" />
         <activity android:name=".main.CheckboxExamplesActivity" />
+        <activity android:name=".main.SwitchExamplesActivity" />
     </application>
 
 </manifest>

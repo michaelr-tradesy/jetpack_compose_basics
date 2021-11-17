@@ -363,7 +363,7 @@ class MainActivity : DefaultActivity() {
             Type.RangeSlider -> showToastExample()
             Type.Surface -> showToastExample()
             Type.TextField -> showToastExample()
-            Type.Switch -> showToastExample()
+            Type.Switch -> viewModel.showSwitchExamples(context = this.applicationContext)
         }
     }
 }
