@@ -28,6 +28,7 @@ interface MainNavigator {
     fun showDividerExamples(context: Context)
     fun showFloatingActionButtonExamples(context: Context)
     fun showExtendedFloatingActionButtonExamples(context: Context)
+    fun showRadioButtonExamples(context: Context)
 }
 
 @ExperimentalUnitApi
@@ -77,6 +78,16 @@ class DefaultMainNavigator: MainNavigator {
         navigate(
             applicationContext = context,
             clazz = ExtendedFloatingActionButtonExamplesActivity::class.java,
+            bundle = bundle,
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK
+        )
+    }
+
+    override fun showRadioButtonExamples(context: Context) {
+        val bundle = Bundle()
+        navigate(
+            applicationContext = context,
+            clazz = RadioButtonExamplesActivity::class.java,
             bundle = bundle,
             flags = Intent.FLAG_ACTIVITY_NEW_TASK
         )

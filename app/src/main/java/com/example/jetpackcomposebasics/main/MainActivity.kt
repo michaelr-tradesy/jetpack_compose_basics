@@ -1,14 +1,14 @@
 package com.example.jetpackcomposebasics.main
 
 import android.content.res.Configuration
-import android.os.Bundle
-import android.widget.Toast
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.AnimationVector1D
 import androidx.compose.animation.core.TweenSpec
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
@@ -61,7 +61,6 @@ class MainActivity : DefaultActivity() {
         RadioButton,
         Slider,
         RangeSlider,
-        SnackBar,
         Surface,
         TopAppBar,
         TextField,
@@ -74,7 +73,7 @@ class MainActivity : DefaultActivity() {
     private lateinit var animatedProgress: Animatable<Float, AnimationVector1D>
     private lateinit var viewModel: MainViewModel
 
-    private val openDialog = mutableStateOf(true)
+    private val openDialog = mutableStateOf(false)
     private val exampleType = mutableStateOf(Type.None)
 
     @Preview(
@@ -198,12 +197,12 @@ class MainActivity : DefaultActivity() {
                         Pair("Radio Button Examples", Type.RadioButton),
                         Pair("Slider Examples", Type.Slider),
                         Pair("Range Slider Examples", Type.RangeSlider),
-                        Pair("Snack Bar Examples", Type.SnackBar),
                         Pair("Surface Examples", Type.Surface),
                         Pair("Text Field Examples", Type.TextField),
                         Pair("Switch Examples", Type.Switch),
+                        Pair("", Type.None),
                     )
-                showAlertDialogExample()
+                ShowAlertDialogExample()
                 MyScreenContent(list)
             }
         }
@@ -304,7 +303,7 @@ class MainActivity : DefaultActivity() {
     }
 
     @Composable
-    private fun showAlertDialogExample() {
+    private fun ShowAlertDialogExample() {
         Column {
             if (openDialog.value) {
                 AlertDialog(
@@ -345,30 +344,29 @@ class MainActivity : DefaultActivity() {
     private fun onListItemSelected(type: Type) {
         when(type) {
             Type.Alert -> openDialog.value = !openDialog.value
-            Type.None -> TODO()
-            Type.TopAppBar -> TODO()
-            Type.BadgeBox -> TODO()
+            Type.None -> showToastExample()
+            Type.TopAppBar -> showToastExample()
+            Type.BadgeBox -> showToastExample()
             Type.Button -> viewModel.showButtonExamples(this)
-            Type.Card -> TODO()
-            Type.Checkbox -> TODO()
-            Type.CircularProgress -> TODO()
-            Type.CustomView -> TODO()
+            Type.Card -> showToastExample()
+            Type.Checkbox -> showToastExample()
+            Type.CircularProgress -> showToastExample()
+            Type.CustomView -> showToastExample()
             Type.Divider -> viewModel.showDividerExamples(context = this.applicationContext)
-            Type.DropDownList -> TODO()
-            Type.EditTextField -> TODO()
+            Type.DropDownList -> showToastExample()
+            Type.EditTextField -> showToastExample()
             Type.ExtendedFloatingActionButton -> viewModel.showExtendedFloatingActionButtonExamples(context = this.applicationContext)
             Type.FloatingActionButton -> viewModel.showFloatingActionButtonExamples(context = this.applicationContext)
-            Type.LinearProgress -> TODO()
+            Type.LinearProgress -> showToastExample()
             Type.List -> viewModel.showListExamples(this)
-            Type.ModalBottomSheetLayout -> TODO()
-            Type.ModalDrawer -> TODO()
-            Type.RadioButton -> TODO()
-            Type.Slider -> TODO()
-            Type.RangeSlider -> TODO()
-            Type.SnackBar -> TODO()
-            Type.Surface -> TODO()
-            Type.TextField -> TODO()
-            Type.Switch -> TODO()
+            Type.ModalBottomSheetLayout -> showToastExample()
+            Type.ModalDrawer -> showToastExample()
+            Type.RadioButton -> viewModel.showRadioButtonExamples(context = this.applicationContext)
+            Type.Slider -> showToastExample()
+            Type.RangeSlider -> showToastExample()
+            Type.Surface -> showToastExample()
+            Type.TextField -> showToastExample()
+            Type.Switch -> showToastExample()
         }
     }
 }
