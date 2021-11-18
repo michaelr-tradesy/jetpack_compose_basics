@@ -30,6 +30,8 @@
         <activity android:name=".main.ProgressIndicatorExamplesActivity" />
         <activity android:name=".main.CheckboxExamplesActivity" />
         <activity android:name=".main.SwitchExamplesActivity" />
+        <activity android:name=".main.SliderExamplesActivity" />
+        <activity android:name=".main.ButtonAnimationExamplesActivity" />
     </application>
 
 </manifest>

@@ -13,6 +13,8 @@ interface MainViewModel {
     fun showProgressIndicatorExamples(context: Context)
     fun showCheckboxExamples(context: Context)
     fun showSwitchExamples(context: Context)
+    fun showSliderExamples(context: Context)
+    fun showButtonAnimationExamples(context: Context)
 }
 
 class DefaultMainViewModel @ExperimentalUnitApi constructor(
@@ -52,5 +54,13 @@ class DefaultMainViewModel @ExperimentalUnitApi constructor(
 
     override fun showSwitchExamples(context: Context) {
         navigator.showSwitchExamples(context)
+    }
+
+    override fun showSliderExamples(context: Context) {
+        navigator.showSliderExamples(context)
+    }
+
+    override fun showButtonAnimationExamples(context: Context) {
+        navigator.showButtonAnimationExamples(context)
     }
 }

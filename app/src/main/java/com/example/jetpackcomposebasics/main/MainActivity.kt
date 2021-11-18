@@ -45,6 +45,7 @@ class MainActivity : DefaultActivity() {
         Alert,
         BadgeBox,
         Button,
+        ButtonAnimation,
         Card,
         Checkbox,
         CustomView,
@@ -180,6 +181,7 @@ class MainActivity : DefaultActivity() {
                         Pair("Top App Bar Examples", Type.TopAppBar),
                         Pair("Badge Box Examples", Type.BadgeBox),
                         Pair("Button Examples", Type.Button),
+                        Pair("Button Animation Examples", Type.ButtonAnimation),
                         Pair("Card Examples", Type.Card),
                         Pair("Checkbox Examples", Type.Checkbox),
                         Pair("Custom View Examples", Type.CustomView),
@@ -346,6 +348,7 @@ class MainActivity : DefaultActivity() {
             Type.TopAppBar -> showToastExample()
             Type.BadgeBox -> showToastExample()
             Type.Button -> viewModel.showButtonExamples(this)
+            Type.ButtonAnimation -> viewModel.showButtonAnimationExamples(context = this.applicationContext)
             Type.Card -> showToastExample()
             Type.Checkbox -> viewModel.showCheckboxExamples(context = this.applicationContext)
             Type.CustomView -> showToastExample()
@@ -359,7 +362,7 @@ class MainActivity : DefaultActivity() {
             Type.ModalDrawer -> showToastExample()
             Type.ProgressIndicator -> viewModel.showProgressIndicatorExamples(context = this.applicationContext)
             Type.RadioButton -> viewModel.showRadioButtonExamples(context = this.applicationContext)
-            Type.Slider -> showToastExample()
+            Type.Slider -> viewModel.showSliderExamples(context = this.applicationContext)
             Type.RangeSlider -> showToastExample()
             Type.Surface -> showToastExample()
             Type.TextField -> showToastExample()
