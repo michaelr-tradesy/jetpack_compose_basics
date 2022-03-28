@@ -1,9 +1,7 @@
 package com.example.jetpackcomposebasics
 
-import android.R
 import android.content.res.Configuration
 import android.os.Bundle
-import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.animateContentSize
@@ -24,9 +22,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.jetpackcomposebasics.ui.theme.JetpackComposeBasicsTheme
 
-class DataActivity :  ComponentActivity() {
+class DataActivity :  DefaultActivity() {
 
     data class UserInfo(
         val name: String,
@@ -34,13 +31,6 @@ class DataActivity :  ComponentActivity() {
         val location: String,
         val body: String
     )
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContent {
-            DefaultPreview()
-        }
-    }
 
     @Preview(
         fontScale = 1.5f,
@@ -57,7 +47,7 @@ class DataActivity :  ComponentActivity() {
         showBackground = true
     )
     @Composable
-    private fun DefaultPreview() {
+    override fun DefaultPreview() {
         MyApp {
             val list = mutableListOf<UserInfo>()
 
@@ -82,16 +72,6 @@ class DataActivity :  ComponentActivity() {
     }
 
     @Composable
-    private fun MyApp(content: @Composable () -> Unit) {
-        JetpackComposeBasicsTheme {
-            // A surface container using the 'background' color from the theme
-            Surface(color = MaterialTheme.colors.background) {
-                content()
-            }
-        }
-    }
-
-    @Composable
     private fun MyScreenContent(userInfo: List<UserInfo>) {
         LazyColumn {
             items(userInfo) { nextUserInfo ->
@@ -104,7 +84,7 @@ class DataActivity :  ComponentActivity() {
     fun Greeting(userInfo: UserInfo) {
         Row(modifier = Modifier.padding(all = 8.dp)) {
             Image(
-                painter = painterResource(R.drawable.ic_delete),
+                painter = painterResource(android.R.drawable.ic_delete),
                 contentDescription = userInfo.contentDescription,
                 modifier = Modifier
                     // Set image size to 40 dp

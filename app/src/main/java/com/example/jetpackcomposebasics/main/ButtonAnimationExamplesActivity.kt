@@ -3,11 +3,12 @@ package com.example.jetpackcomposebasics.main
 import android.content.res.Configuration
 import androidx.compose.animation.*
 import androidx.compose.animation.core.*
-import androidx.compose.foundation.*
-import androidx.compose.foundation.gestures.Orientation
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.awaitFirstDown
 import androidx.compose.foundation.gestures.horizontalDrag
-import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
@@ -33,7 +34,6 @@ import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import com.example.jetpackcomposebasics.DefaultActivity
-import com.example.jetpackcomposebasics.ui.theme.JetpackComposeBasicsTheme
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import kotlin.math.absoluteValue
@@ -68,23 +68,6 @@ class ButtonAnimationExamplesActivity : DefaultActivity() {
     override fun DefaultPreview() {
         MyApp {
             MyScreenContent()
-        }
-    }
-
-    @Composable
-    private fun MyApp(content: @Composable () -> Unit) {
-        val scrollState = rememberScrollState()
-
-        JetpackComposeBasicsTheme {
-            Surface(
-                color = MaterialTheme.colors.background,
-                modifier = Modifier.scrollable(
-                    state = scrollState,
-                    orientation = Orientation.Vertical
-                )
-            ) {
-                content()
-            }
         }
     }
 

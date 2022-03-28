@@ -1,7 +1,11 @@
 package com.example.jetpackcomposebasics.buttonexamples
 
 import android.content.res.Configuration
+import android.view.MotionEvent
 import androidx.compose.foundation.*
+import androidx.compose.foundation.gestures.awaitFirstDown
+import androidx.compose.foundation.gestures.forEachGesture
+import androidx.compose.foundation.gestures.waitForUpOrCancellation
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
@@ -12,21 +16,27 @@ import androidx.compose.material.ButtonDefaults.elevation
 import androidx.compose.material.ButtonDefaults.outlinedButtonColors
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Home
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.input.pointer.pointerInteropFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.ExperimentalUnitApi
 import androidx.compose.ui.unit.dp
 import com.example.jetpackcomposebasics.DefaultActivity
 import com.example.jetpackcomposebasics.ui.theme.JetpackComposeBasicsTheme
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 
+@ExperimentalComposeUiApi
 @ExperimentalUnitApi
 class ButtonExamplesActivity : DefaultActivity() {
 
@@ -55,17 +65,9 @@ class ButtonExamplesActivity : DefaultActivity() {
     }
 
     @Composable
-    private fun MyApp(content: @Composable () -> Unit) {
-        JetpackComposeBasicsTheme {
-            // A surface container using the 'background' color from the theme
-            Surface(color = MaterialTheme.colors.background) {
-                content()
-            }
-        }
-    }
-
-    @Composable
     private fun MyScreenContent() {
+        val value = remember { mutableStateOf(0) }
+
         Column(modifier = Modifier.fillMaxHeight()) {
 //            SimpleButtonComponent()
 //            BorderedButtonComponent()
@@ -76,7 +78,69 @@ class ButtonExamplesActivity : DefaultActivity() {
             TextButtonComponent()
             IconToggleButtonComponent()
             IconButtonComponent()
+            RepeatingButton(onClick = { value.value += 1 }) {
+                Text(
+                    modifier = Modifier.padding(16.dp),
+                    text = "Repeating Button Click Count=[${value.value}]"
+                )
+            }
         }
+    }
+
+    @Composable
+    private fun RepeatingButton(
+        modifier: Modifier = Modifier,
+        onClick: () -> Unit,
+        enabled: Boolean = true,
+        interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
+        elevation: ButtonElevation? = ButtonDefaults.elevation(),
+        shape: Shape = MaterialTheme.shapes.small,
+        border: BorderStroke? = null,
+        colors: ButtonColors = ButtonDefaults.buttonColors(),
+        contentPadding: PaddingValues = ButtonDefaults.ContentPadding,
+        maxDelayMillis: Long = 1000,
+        minDelayMillis: Long = 5,
+        delayDecayFactor: Float = .15f,
+        content: @Composable RowScope.() -> Unit
+    ) {
+
+        val currentClickListener by rememberUpdatedState(onClick)
+
+        Button(
+            modifier = modifier.pointerInput(interactionSource, enabled) {
+                forEachGesture {
+                    coroutineScope {
+                        awaitPointerEventScope {
+                            val down = awaitFirstDown(requireUnconsumed = false)
+
+                            val heldButtonJob = launch {
+                                var currentDelayMillis = maxDelayMillis
+                                while (enabled && down.pressed) {
+                                    currentClickListener()
+                                    delay(currentDelayMillis)
+                                    val nextDelayMillis =
+                                        currentDelayMillis - (currentDelayMillis * delayDecayFactor)
+                                    currentDelayMillis =
+                                        nextDelayMillis.toLong().coerceAtLeast(minDelayMillis)
+                                }
+                            }
+
+                            waitForUpOrCancellation()
+                            heldButtonJob.cancel()
+                        }
+                    }
+                }
+            },
+            onClick = {},
+            enabled = enabled,
+            interactionSource = interactionSource,
+            elevation = elevation,
+            shape = shape,
+            border = border,
+            colors = colors,
+            contentPadding = contentPadding,
+            content = content
+        )
     }
 
     @Composable

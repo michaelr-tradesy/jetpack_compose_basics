@@ -12,7 +12,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.ExperimentalUnitApi
 import androidx.compose.ui.unit.dp
 import com.example.jetpackcomposebasics.DefaultActivity
-import com.example.jetpackcomposebasics.ui.theme.JetpackComposeBasicsTheme
 import androidx.compose.material.CheckboxDefaults.colors
 
 
@@ -37,16 +36,6 @@ class CheckboxExamplesActivity : DefaultActivity() {
     override fun DefaultPreview() {
         MyApp {
             MyScreenContent()
-        }
-    }
-
-    @Composable
-    private fun MyApp(content: @Composable () -> Unit) {
-        JetpackComposeBasicsTheme {
-            // A surface container using the 'background' color from the theme
-            Surface(color = MaterialTheme.colors.background) {
-                content()
-            }
         }
     }
 

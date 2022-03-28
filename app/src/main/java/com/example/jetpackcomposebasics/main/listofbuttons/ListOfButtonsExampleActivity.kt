@@ -1,6 +1,5 @@
 package com.example.jetpackcomposebasics.main.listofbuttons
 
-import android.R
 import android.content.res.Configuration
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.tween
@@ -34,7 +33,6 @@ import androidx.compose.ui.unit.sp
 import com.example.jetpackcomposebasics.DefaultActivity
 import com.example.jetpackcomposebasics.buttonexamples.ButtonExamplesViewModel
 import com.example.jetpackcomposebasics.buttonexamples.DefaultButtonExamplesViewModel
-import com.example.jetpackcomposebasics.ui.theme.JetpackComposeBasicsTheme
 import kotlin.math.abs
 import kotlin.random.Random
 
@@ -63,16 +61,6 @@ class ListOfButtonsExampleActivity : DefaultActivity() {
         viewModel = DefaultButtonExamplesViewModel()
         MyApp {
             MyScreenContent()
-        }
-    }
-
-    @Composable
-    private fun MyApp(content: @Composable () -> Unit) {
-        JetpackComposeBasicsTheme {
-            // A surface container using the 'background' color from the theme
-            Surface(color = MaterialTheme.colors.background) {
-                content()
-            }
         }
     }
 
@@ -168,7 +156,7 @@ class ListOfButtonsExampleActivity : DefaultActivity() {
             enabled = enabled ?: false
         ) {
             Image(
-                painter = painterResource(R.drawable.ic_delete),
+                painter = painterResource(android.R.drawable.ic_delete),
                 contentDescription = "Icon Toggle Button",
                 modifier = Modifier
                     // Set image size to 40 dp

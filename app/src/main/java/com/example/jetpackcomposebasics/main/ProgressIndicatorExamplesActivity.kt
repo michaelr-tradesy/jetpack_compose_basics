@@ -46,16 +46,6 @@ class ProgressIndicatorExamplesActivity : DefaultActivity() {
     }
 
     @Composable
-    private fun MyApp(content: @Composable () -> Unit) {
-        JetpackComposeBasicsTheme {
-            // A surface container using the 'background' color from the theme
-            Surface(color = MaterialTheme.colors.background) {
-                content()
-            }
-        }
-    }
-
-    @Composable
     private fun MyScreenContent() {
         this.observer = remember { mutableStateOf(null) }
 

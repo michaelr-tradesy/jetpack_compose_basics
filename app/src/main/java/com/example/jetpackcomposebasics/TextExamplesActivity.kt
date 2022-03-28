@@ -2,7 +2,6 @@ package com.example.jetpackcomposebasics
 
 import android.content.res.Configuration
 import android.os.Bundle
-import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.tween
@@ -26,18 +25,10 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.*
-import com.example.jetpackcomposebasics.ui.theme.JetpackComposeBasicsTheme
 
 
 @ExperimentalUnitApi
-class TextExamplesActivity : ComponentActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContent {
-            DefaultPreview()
-        }
-    }
-
+class TextExamplesActivity : DefaultActivity() {
     @Preview(
         fontScale = 1.5f,
         name = "Light Mode",
@@ -53,19 +44,9 @@ class TextExamplesActivity : ComponentActivity() {
         showBackground = true
     )
     @Composable
-    private fun DefaultPreview() {
+    override fun DefaultPreview() {
         MyApp {
             MyScreenContent()
-        }
-    }
-
-    @Composable
-    private fun MyApp(content: @Composable () -> Unit) {
-        JetpackComposeBasicsTheme {
-            // A surface container using the 'background' color from the theme
-            Surface(color = MaterialTheme.colors.background) {
-                content()
-            }
         }
     }
 
