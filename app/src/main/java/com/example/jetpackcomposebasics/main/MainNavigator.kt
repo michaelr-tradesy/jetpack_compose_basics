@@ -3,6 +3,9 @@ package com.example.jetpackcomposebasics.main
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.unit.ExperimentalUnitApi
 import com.example.jetpackcomposebasics.buttonexamples.ButtonExamplesActivity
 import com.example.jetpackcomposebasics.main.divider.DividerExamplesActivity
@@ -36,6 +39,9 @@ interface MainNavigator {
     fun showButtonAnimationExamples(context: Context)
 }
 
+@ExperimentalMaterialApi
+@ExperimentalAnimationApi
+@ExperimentalComposeUiApi
 @ExperimentalUnitApi
 class DefaultMainNavigator: MainNavigator {
     override fun showButtonExamples(context: Context) {

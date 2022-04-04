@@ -1,6 +1,9 @@
 package com.example.jetpackcomposebasics.main
 
 import android.content.Context
+import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.unit.ExperimentalUnitApi
 
 interface MainViewModel {
@@ -17,6 +20,9 @@ interface MainViewModel {
     fun showButtonAnimationExamples(context: Context)
 }
 
+@ExperimentalComposeUiApi
+@ExperimentalAnimationApi
+@ExperimentalMaterialApi
 class DefaultMainViewModel @ExperimentalUnitApi constructor(
     private val navigator: MainNavigator = DefaultMainNavigator()
 ) : MainViewModel {

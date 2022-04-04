@@ -44,9 +44,11 @@ import kotlin.math.roundToInt
  * Source code was copied from here:
  * https://developer.android.com/jetpack/compose/animation
  */
+@ExperimentalUnitApi
+@ExperimentalAnimationApi
+@ExperimentalMaterialApi
 class ButtonAnimationExamplesActivity : DefaultActivity() {
 
-    @ExperimentalMaterialApi
     @Preview(
         fontScale = 1.5f,
         name = "Light Mode",
@@ -61,9 +63,6 @@ class ButtonAnimationExamplesActivity : DefaultActivity() {
         showSystemUi = true,
         showBackground = true
     )
-    @ExperimentalTransitionApi
-    @ExperimentalAnimationApi
-    @ExperimentalUnitApi
     @Composable
     override fun DefaultPreview() {
         MyApp {
@@ -71,10 +70,6 @@ class ButtonAnimationExamplesActivity : DefaultActivity() {
         }
     }
 
-    @ExperimentalMaterialApi
-    @ExperimentalTransitionApi
-    @ExperimentalAnimationApi
-    @ExperimentalUnitApi
     @Composable
     private fun MyScreenContent() {
         val density = LocalDensity.current
@@ -179,8 +174,6 @@ class ButtonAnimationExamplesActivity : DefaultActivity() {
         }
     }
 
-    @ExperimentalAnimationApi
-    @ExperimentalUnitApi
     @Composable
     private fun SimpleAnimatedVisibility() {
         var editable by remember { mutableStateOf(true) }
@@ -192,9 +185,6 @@ class ButtonAnimationExamplesActivity : DefaultActivity() {
         }
     }
 
-    @ExperimentalTransitionApi
-    @ExperimentalAnimationApi
-    @ExperimentalUnitApi
     @Composable
     private fun MutableTransitionStateExample() {
         // Create a MutableTransitionState<Boolean> for the AnimatedVisibility.
@@ -223,9 +213,6 @@ class ButtonAnimationExamplesActivity : DefaultActivity() {
         }
     }
 
-    @ExperimentalTransitionApi
-    @ExperimentalAnimationApi
-    @ExperimentalUnitApi
     @Composable
     private fun CustomAnimationExample() {
         // Create a MutableTransitionState<Boolean> for the AnimatedVisibility.
@@ -250,10 +237,6 @@ class ButtonAnimationExamplesActivity : DefaultActivity() {
         }
     }
 
-    @ExperimentalMaterialApi
-    @ExperimentalTransitionApi
-    @ExperimentalAnimationApi
-    @ExperimentalUnitApi
     @Composable
     private fun AnimatedContentExample() {
         var expanded by remember { mutableStateOf(false) }

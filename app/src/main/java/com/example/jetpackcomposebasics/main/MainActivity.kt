@@ -1,6 +1,7 @@
 package com.example.jetpackcomposebasics.main
 
 import android.content.res.Configuration
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.AnimationVector1D
@@ -23,6 +24,7 @@ import androidx.compose.material.icons.filled.PlayCircle
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.semantics.contentDescription
@@ -41,6 +43,9 @@ import kotlinx.coroutines.launch
 import kotlin.math.roundToInt
 
 
+@ExperimentalMaterialApi
+@ExperimentalAnimationApi
+@ExperimentalComposeUiApi
 @ExperimentalUnitApi
 class MainActivity : DefaultActivity() {
 
