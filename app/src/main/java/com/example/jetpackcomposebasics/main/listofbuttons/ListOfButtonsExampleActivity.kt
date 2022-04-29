@@ -31,8 +31,8 @@ import androidx.compose.ui.unit.ExperimentalUnitApi
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.jetpackcomposebasics.DefaultActivity
-import com.example.jetpackcomposebasics.buttonexamples.ButtonExamplesViewModel
-import com.example.jetpackcomposebasics.buttonexamples.DefaultButtonExamplesViewModel
+import com.example.jetpackcomposebasics.examples.button.ButtonExamplesViewModel
+import com.example.jetpackcomposebasics.examples.button.DefaultButtonExamplesViewModel
 import kotlin.math.abs
 import kotlin.random.Random
 
@@ -134,37 +134,6 @@ class ListOfButtonsExampleActivity : DefaultActivity() {
                 Divider()
             }
 
-        }
-    }
-
-    @Composable
-    fun IconToggleButtonBuild(
-        checked: Boolean?,
-        enabled: Boolean?,
-        modifier: Modifier?
-    ) {
-        IconToggleButton(
-//            onCheckedChange: (Boolean) -> Unit,
-//        modifier: Modifier = Modifier,
-//        interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
-//        content: @Composable () -> Unit
-            modifier = modifier ?: Modifier.padding(0.dp),
-            checked = checked ?: false,
-            onCheckedChange = {
-
-            },
-            enabled = enabled ?: false
-        ) {
-            Image(
-                painter = painterResource(android.R.drawable.ic_delete),
-                contentDescription = "Icon Toggle Button",
-                modifier = Modifier
-                    // Set image size to 40 dp
-                    .size(40.dp)
-                    // Clip image to be shaped as a circle
-                    .clip(CircleShape)
-                    .border(1.5.dp, MaterialTheme.colors.secondary, CircleShape)
-            )
         }
     }
 

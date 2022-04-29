@@ -21,17 +21,61 @@
             </intent-filter>
         </activity>
         <activity android:name=".DataActivity" />
-        <activity android:name=".buttonexamples.ButtonExamplesActivity" />
-        <activity android:name=".main.listofbuttons.ListOfButtonsExampleActivity" />
-        <activity android:name=".main.divider.DividerExamplesActivity" />
-        <activity android:name=".main.floatingactionbuttons.FloatingActionButtonExamplesActivity" />
-        <activity android:name=".main.ExtendedFloatingActionButtonExamplesActivity" />
-        <activity android:name=".main.RadioButtonExamplesActivity" />
-        <activity android:name=".main.ProgressIndicatorExamplesActivity" />
-        <activity android:name=".main.CheckboxExamplesActivity" />
-        <activity android:name=".main.SwitchExamplesActivity" />
-        <activity android:name=".main.SliderExamplesActivity" />
-        <activity android:name=".main.ButtonAnimationExamplesActivity" />
+        <activity android:name=".examples.alert.AlertExamplesActivity" />
+        <activity android:name=".examples.alertdialog.AlertDialogExamplesActivity" />
+        <activity android:name=".examples.animations.AnimationsExamplesActivity" />
+        <activity android:name=".examples.backdropscaffold.BackdropScaffoldExamplesActivity" />
+        <activity android:name=".examples.badge.BadgeExamplesActivity" />
+        <activity android:name=".examples.badgedbox.BadgedBoxExamplesActivity" />
+        <activity android:name=".examples.bottomappbar.BottomAppBarExamplesActivity" />
+        <activity android:name=".examples.bottomdrawer.BottomDrawerExamplesActivity" />
+        <activity android:name=".examples.bottomnavigation.BottomNavigationExamplesActivity" />
+        <activity android:name=".examples.bottomsheetscaffold.BottomSheetScaffoldExamplesActivity" />
+        <activity android:name=".examples.button.ButtonExamplesActivity" />
+        <activity android:name=".examples.buttonanimation.ButtonAnimationExamplesActivity" />
+        <activity android:name=".examples.card.CardExamplesActivity" />
+        <activity android:name=".examples.checkbox.CheckboxExamplesActivity" />
+        <activity android:name=".examples.chip.ChipExamplesActivity" />
+        <activity android:name=".examples.customview.CustomViewExamplesActivity" />
+        <activity android:name=".examples.divider.DividerExamplesActivity" />
+        <activity android:name=".examples.dropdownmenu.DropDownMenuExamplesActivity" />
+        <activity android:name=".examples.dropdownmenuitem.DropDownMenuItemExamplesActivity" />
+        <activity android:name=".examples.edittextfield.EditTextFieldExamplesActivity" />
+        <activity android:name=".examples.exposeddropdownmenubox.ExposedDropDownMenuBoxExamplesActivity" />
+        <activity android:name=".examples.extendedfloatingactionbutton.ExtendedFloatingActionButtonExamplesActivity" />
+        <activity android:name=".examples.filterchip.FilterChipExamplesActivity" />
+        <activity android:name=".examples.floatingactionbutton.FloatingActionButtonExamplesActivity" />
+        <activity android:name=".examples.gestures.GesturesExamplesActivity" />
+        <activity android:name=".examples.icon.IconExamplesActivity" />
+        <activity android:name=".examples.interactions.InteractionsExamplesActivity" />
+        <activity android:name=".examples.leadingicontab.LeadingIconTabExamplesActivity" />
+        <activity android:name=".examples.list.ListExamplesActivity" />
+        <activity android:name=".examples.listitem.ListItemExamplesActivity" />
+        <activity android:name=".examples.modalbottomsheetlayout.ModalBottomSheetLayoutExamplesActivity" />
+        <activity android:name=".examples.modaldrawer.ModalDrawerExamplesActivity" />
+        <activity android:name=".examples.navigationrail.NavigationRailExamplesActivity" />
+        <activity android:name=".examples.navigationrailitem.NavigationRailItemExamplesActivity" />
+        <activity android:name=".examples.outlinedtextfield.OutlinedTextFieldExamplesActivity" />
+        <activity android:name=".examples.progressindicator.ProgressIndicatorExamplesActivity" />
+        <activity android:name=".examples.providetextstyle.ProvideTextStyleExamplesActivity" />
+        <activity android:name=".examples.radiobutton.RadioButtonExamplesActivity" />
+        <activity android:name=".examples.rangeslider.RangeSliderExamplesActivity" />
+        <activity android:name=".examples.scrollabletabrow.ScrollableTabRowExamplesActivity" />
+        <activity android:name=".examples.slider.SliderExamplesActivity" />
+        <activity android:name=".examples.snackbar.SnackbarExamplesActivity" />
+        <activity android:name=".examples.snackbarhost.SnackbarHostExamplesActivity" />
+        <activity android:name=".examples.surface.SurfaceExamplesActivity" />
+        <activity android:name=".examples.swipetodismiss.SwipeToDismissExamplesActivity" />
+        <activity android:name=".examples.switchbutton.SwitchExamplesActivity" />
+        <activity android:name=".examples.tab.TabExamplesActivity" />
+        <activity android:name=".examples.tabrow.TabRowExamplesActivity" />
+        <activity android:name=".examples.text.TextExamplesActivity" />
+        <activity android:name=".examples.textfield.TextFieldExamplesActivity" />
+        <activity android:name=".examples.topappbar.TopAppBarExamplesActivity" />
+        <activity android:name=".examples.tristatecheckbox.TriStateCheckBoxExamplesActivity" />
+        <activity android:name=".examples.uigraphics.UiGraphicsExamplesActivity" />
+        <activity android:name=".examples.uiutil.UiUtilExamplesActivity" />
+
     </application>
 
 </manifest>

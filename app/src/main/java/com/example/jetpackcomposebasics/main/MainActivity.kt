@@ -4,8 +4,6 @@ import android.content.res.Configuration
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.Animatable
-import androidx.compose.animation.core.AnimationVector1D
-import androidx.compose.animation.core.TweenSpec
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -27,6 +25,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.*
@@ -35,6 +34,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.ExperimentalUnitApi
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.jetpackcomposebasics.ComposeFeatureType
 import com.example.jetpackcomposebasics.DefaultActivity
 import com.example.jetpackcomposebasics.ui.theme.ColorPalette
 import com.example.jetpackcomposebasics.ui.theme.getAppThemeColors
@@ -49,44 +49,17 @@ import kotlin.math.roundToInt
 @ExperimentalUnitApi
 class MainActivity : DefaultActivity() {
 
-    private enum class Type {
-        None,
-        Alert,
-        BadgeBox,
-        Button,
-        ButtonAnimation,
-        Card,
-        Checkbox,
-        CustomView,
-        Divider,
-        DropDownList,
-        EditTextField,
-        ExtendedFloatingActionButton,
-        FloatingActionButton,
-        List,
-        ModalBottomSheetLayout,
-        ModalDrawer,
-        ProgressIndicator,
-        RadioButton,
-        Slider,
-        RangeSlider,
-        Surface,
-        TextField,
-        Switch,
-    }
-
     private lateinit var scaffoldState: ScaffoldState
     private lateinit var coroutineScope: CoroutineScope
     private lateinit var clickCount: MutableState<Int>
-    private lateinit var animatedProgress: Animatable<Float, AnimationVector1D>
     private lateinit var viewModel: MainViewModel
-    private lateinit var expanded : MutableState<Boolean>
-    private lateinit var liked : MutableState<Boolean>
-    private lateinit var result : MutableState<String>
+    private lateinit var expanded: MutableState<Boolean>
+    private lateinit var liked: MutableState<Boolean>
+    private lateinit var result: MutableState<String>
 
 
     private val openDialog = mutableStateOf(false)
-    private val exampleType = mutableStateOf(Type.None)
+    private val exampleType = mutableStateOf(ComposeFeatureType.None)
 
     @Preview(
         fontScale = 1.5f,
@@ -127,17 +100,6 @@ class MainActivity : DefaultActivity() {
             }
             else -> {
                 RoundedCornerShape(progress)
-            }
-        }
-        // lambda to call to trigger shape animation
-        val changeShape: () -> Unit = {
-            val target = animatedProgress.targetValue
-            val nextTarget = if (target == roundEdgePercent) sharpEdgePercent else roundEdgePercent
-            coroutineScope.launch {
-                animatedProgress.animateTo(
-                    targetValue = nextTarget,
-                    animationSpec = TweenSpec(durationMillis = 600)
-                )
             }
         }
 
@@ -281,37 +243,8 @@ class MainActivity : DefaultActivity() {
                 // Screen content
                 // reference:
                 // https://github.com/Foso/Jetpack-Compose-Playground/tree/master/mysamples/src/main/java/de/jensklingenberg/jetpackcomposeplayground/mysamples/github/material
-                val list: List<Pair<String, Type>> =
-                    listOf(
-                        Pair("Alert Dialog Examples", Type.Alert),
-                        Pair("Badge Box Examples", Type.BadgeBox),
-                        Pair("Button Examples", Type.Button),
-                        Pair("Button Animation Examples", Type.ButtonAnimation),
-                        Pair("Card Examples", Type.Card),
-                        Pair("Checkbox Examples", Type.Checkbox),
-                        Pair("Custom View Examples", Type.CustomView),
-                        Pair("Divider Examples", Type.Divider),
-                        Pair("Drop Down List Examples", Type.DropDownList),
-                        Pair("Edit Text Field Examples", Type.EditTextField),
-                        Pair(
-                            "Extended Floating Action Button Examples",
-                            Type.ExtendedFloatingActionButton
-                        ),
-                        Pair("Floating Action Button Examples", Type.FloatingActionButton),
-                        Pair("List of Buttons Examples", Type.List),
-                        Pair("Modal Bottom Sheet Layout Examples", Type.ModalBottomSheetLayout),
-                        Pair("Modal Drawer Examples", Type.ModalDrawer),
-                        Pair("Progress Indicator Examples", Type.ProgressIndicator),
-                        Pair("Radio Button Examples", Type.RadioButton),
-                        Pair("Slider Examples", Type.Slider),
-                        Pair("Range Slider Examples", Type.RangeSlider),
-                        Pair("Surface Examples", Type.Surface),
-                        Pair("Text Field Examples", Type.TextField),
-                        Pair("Switch Examples", Type.Switch),
-                        Pair("", Type.None),
-                    )
                 ShowAlertDialogExample()
-                MyScreenContent(list)
+                MyScreenContent()
             }
         }
     }
@@ -367,62 +300,27 @@ class MainActivity : DefaultActivity() {
     }
 
     @Composable
-    private fun MyScreenContent(fields: List<Pair<String, Type>>) {
-        val isDarkTheme = appThemeState.component1().isDarkTheme
-        val colorPalette = appThemeState.component1().colorPalette
-        val colors = getAppThemeColors(isDarkTheme, colorPalette)
-        val statusBarColor = colors.background
-
+    private fun MyScreenContent() {
         LazyColumn {
-            items(items = fields) { nextField ->
+            items(items = ComposeFeatureType.values()) { nextField ->
+                val text = stringResource(id = nextField.resourceId)
                 Column(
-                    modifier = Modifier
-                        .background(
-                            color = statusBarColor,
-                            shape = RoundedCornerShape(4.dp)
-                        )
-                        .padding(8.dp)
-                        .semantics { contentDescription = nextField.first }
+                    modifier = Modifier.padding(8.dp)
+                        .semantics { contentDescription = text }
                         .clickable {
-                            exampleType.value = nextField.second
-                            onListItemSelected(nextField.second)
+                            exampleType.value = nextField
+                            onListItemSelected(nextField)
                         }
                         .fillMaxHeight(),
                 ) {
-                    val annotatedString = annotateMyString(nextField.first)
-                    Text(text = annotatedString)
+                    Text(
+                        modifier = Modifier,
+                        text = text
+                    )
                     Divider(modifier = Modifier.padding(8.dp))
                 }
             }
         }
-    }
-
-    @Composable
-    private fun annotateMyString(text: String): AnnotatedString {
-        val annotatedString = buildAnnotatedString {
-            withStyle(style = ParagraphStyle(lineHeight = 30.sp)) {
-                withStyle(style = SpanStyle(color = Color(108, 196, 23, 255))) {
-                    append("[Start] ")
-                }
-                withStyle(
-                    style = SpanStyle(
-                        fontWeight = FontWeight.Bold,
-                        color = Color(253, 208, 23, 255)
-                    )
-                ) {
-                    append(text)
-                }
-                withStyle(
-                    style = SpanStyle(
-                        fontWeight = FontWeight.Bold,
-                        color = Color(113, 24, 196, 255)
-                    )
-                ) {
-                    append("[End]")
-                }
-            }
-        }
-        return annotatedString
     }
 
     @Composable
@@ -464,33 +362,7 @@ class MainActivity : DefaultActivity() {
         }
     }
 
-    private fun onListItemSelected(type: Type) {
-        when (type) {
-            Type.Alert -> openDialog.value = !openDialog.value
-            Type.None -> showToastExample()
-            Type.BadgeBox -> showToastExample()
-            Type.Button -> viewModel.showButtonExamples(this)
-            Type.ButtonAnimation -> viewModel.showButtonAnimationExamples(context = this.applicationContext)
-            Type.Card -> showToastExample()
-            Type.Checkbox -> viewModel.showCheckboxExamples(context = this.applicationContext)
-            Type.CustomView -> showToastExample()
-            Type.Divider -> viewModel.showDividerExamples(context = this.applicationContext)
-            Type.DropDownList -> showToastExample()
-            Type.EditTextField -> showToastExample()
-            Type.ExtendedFloatingActionButton -> viewModel.showExtendedFloatingActionButtonExamples(
-                context = this.applicationContext
-            )
-            Type.FloatingActionButton -> viewModel.showFloatingActionButtonExamples(context = this.applicationContext)
-            Type.List -> viewModel.showListExamples(this)
-            Type.ModalBottomSheetLayout -> showToastExample()
-            Type.ModalDrawer -> showToastExample()
-            Type.ProgressIndicator -> viewModel.showProgressIndicatorExamples(context = this.applicationContext)
-            Type.RadioButton -> viewModel.showRadioButtonExamples(context = this.applicationContext)
-            Type.Slider -> viewModel.showSliderExamples(context = this.applicationContext)
-            Type.RangeSlider -> showToastExample()
-            Type.Surface -> showToastExample()
-            Type.TextField -> showToastExample()
-            Type.Switch -> viewModel.showSwitchExamples(context = this.applicationContext)
-        }
+    private fun onListItemSelected(type: ComposeFeatureType) {
+        viewModel.onFeatureSelected(this.applicationContext, type)
     }
 }
