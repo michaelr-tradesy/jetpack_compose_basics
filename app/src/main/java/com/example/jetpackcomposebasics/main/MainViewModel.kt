@@ -7,13 +7,19 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.unit.ExperimentalUnitApi
 import com.example.jetpackcomposebasics.ComposeFeatureType
 
+
+@ExperimentalMaterialApi
+@ExperimentalAnimationApi
+@ExperimentalComposeUiApi
+@ExperimentalUnitApi
 interface MainViewModel {
     fun onFeatureSelected(context: Context, type: ComposeFeatureType)
 }
 
-@ExperimentalComposeUiApi
-@ExperimentalAnimationApi
 @ExperimentalMaterialApi
+@ExperimentalAnimationApi
+@ExperimentalComposeUiApi
+@ExperimentalUnitApi
 class DefaultMainViewModel @ExperimentalUnitApi constructor(
     private val navigator: MainNavigator = DefaultMainNavigator()
 ) : MainViewModel {
