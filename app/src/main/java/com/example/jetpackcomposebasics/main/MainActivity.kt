@@ -175,7 +175,7 @@ class MainActivity : DefaultActivity() {
                                     } else {
                                         result.value = "Unliked"
                                     }
-                                    appThemeState.value = appThemeState.value.copy(isDarkTheme = it)
+                                    newAppThemeState(appThemeState.value.copy(isDarkTheme = it))
                                 }
                             ) {
                                 val tint by animateColorAsState(
@@ -279,7 +279,7 @@ class MainActivity : DefaultActivity() {
             DropdownMenuItem(onClick = {
                 expanded.value = false
                 result.value = it.toString()
-                appThemeState.value = appThemeState.value.copy(colorPalette = it)
+                newAppThemeState(appThemeState.value.copy(colorPalette = it))
             }) {
                 Text(it.toString())
             }
@@ -329,7 +329,7 @@ class MainActivity : DefaultActivity() {
             items(items = ComposeFeatureType.values()) { nextField ->
                 val text = stringResource(id = nextField.resourceId)
                 Column(
-                    modifier = Modifier.padding(8.dp)
+                    modifier = Modifier
                         .semantics { contentDescription = text }
                         .clickable {
                             exampleType.value = nextField
@@ -338,10 +338,10 @@ class MainActivity : DefaultActivity() {
                         .fillMaxHeight(),
                 ) {
                     Text(
-                        modifier = Modifier,
+                        modifier = Modifier.padding(16.dp),
                         text = text
                     )
-                    Divider(modifier = Modifier.padding(8.dp))
+                    Divider(modifier = Modifier)
                 }
             }
         }
