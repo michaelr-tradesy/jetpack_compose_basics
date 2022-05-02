@@ -48,7 +48,7 @@ class RadioButtonExamplesActivity : DefaultActivity() {
         this.observer = remember { mutableStateOf(null) }
 
         Column(
-            modifier = Modifier.fillMaxSize(),
+            modifier = modifier.fillMaxSize(),
             verticalArrangement = Arrangement.SpaceEvenly,
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
@@ -67,23 +67,23 @@ class RadioButtonExamplesActivity : DefaultActivity() {
 
     @Composable
     private fun SimpleRadioButton() {
-        CreateRadioButtonComponent(modifier = Modifier, text = "Simple")
+        CreateRadioButtonComponent(modifier = modifier, text = "Simple")
     }
 
     @Composable
     private fun DisabledRadioButton() {
-        CreateRadioButtonComponent(modifier = Modifier, text = "Disabled", enabled = false)
+        CreateRadioButtonComponent(modifier = modifier, text = "Disabled", enabled = false)
     }
 
     @Composable
     private fun EnabledRadioButton() {
-        CreateRadioButtonComponent(modifier = Modifier, text = "Enabled", enabled = true)
+        CreateRadioButtonComponent(modifier = modifier, text = "Enabled", enabled = true)
     }
 
     @Composable
     private fun DisabledColouredRadioButton() {
         CreateRadioButtonComponent(
-            modifier = Modifier,
+            modifier = modifier,
             text = "Disabled Coloured",
             enabled = false,
             colors = RadioButtonDefaults.colors(disabledColor = Color.Gray)
@@ -93,7 +93,7 @@ class RadioButtonExamplesActivity : DefaultActivity() {
     @Composable
     private fun EnabledColouredRadioButton() {
         CreateRadioButtonComponent(
-            modifier = Modifier,
+            modifier = modifier,
             text = "Enabled Coloured",
             enabled = true,
             colors = RadioButtonDefaults.colors(selectedColor = Color.Blue)
@@ -103,7 +103,7 @@ class RadioButtonExamplesActivity : DefaultActivity() {
     @Composable
     private fun UnselectedColouredRadioButton() {
         CreateRadioButtonComponent(
-            modifier = Modifier,
+            modifier = modifier,
             text = "Unselected Coloured",
             enabled = true,
             colors = RadioButtonDefaults.colors(unselectedColor = Color.DarkGray)
@@ -113,7 +113,7 @@ class RadioButtonExamplesActivity : DefaultActivity() {
     @Composable
     private fun SelectedColouredRadioButton() {
         CreateRadioButtonComponent(
-            modifier = Modifier,
+            modifier = modifier,
             text = "Selected Coloured",
             enabled = true,
             colors = RadioButtonDefaults.colors(selectedColor = Color.Green)
@@ -126,13 +126,13 @@ class RadioButtonExamplesActivity : DefaultActivity() {
             items.forEach { nextItem ->
                 Row {
                     CreateRadioButtonComponent(
-                        modifier = Modifier,
+                        modifier = modifier,
                         text = nextItem,
                         enabled = true,
                         colors = RadioButtonDefaults.colors(selectedColor = Color.Magenta)
                     )
                 }
-                Text(text = nextItem, modifier = Modifier.padding(start = 8.dp))
+                Text(text = nextItem, modifier = modifier.padding(start = 8.dp))
             }
         }
     }
@@ -141,18 +141,18 @@ class RadioButtonExamplesActivity : DefaultActivity() {
     private fun LabelledRadioButton(text: String) {
         Row {
             CreateRadioButtonComponent(
-                modifier = Modifier,
+                modifier = modifier,
                 text = text,
                 enabled = true,
                 colors = RadioButtonDefaults.colors(selectedColor = Color.Magenta)
             )
-            Text(text = text, modifier = Modifier.padding(start = 8.dp))
+            Text(text = text, modifier = modifier.padding(start = 8.dp))
         }
     }
 
     @Composable
     private fun CreateRadioButtonComponent(
-        modifier: Modifier = Modifier,
+        modifier: Modifier,
         text: String? = null,
         enabled: Boolean = true,
         interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },

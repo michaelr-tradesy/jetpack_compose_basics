@@ -40,7 +40,7 @@ class SwipeToDismissExamplesActivity : DefaultActivity() {
     @Composable
     private fun MyScreenContent() {
         Column(
-            modifier = Modifier.fillMaxSize(),
+            modifier = modifier.fillMaxSize(),
             verticalArrangement = Arrangement.SpaceEvenly,
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {

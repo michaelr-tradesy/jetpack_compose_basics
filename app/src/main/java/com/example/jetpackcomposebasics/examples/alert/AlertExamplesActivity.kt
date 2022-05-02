@@ -42,7 +42,7 @@ class AlertExamplesActivity : DefaultActivity() {
     @Composable
     private fun MyScreenContent() {
         Column(
-            modifier = Modifier.fillMaxSize()
+            modifier = modifier.fillMaxSize()
                 .background(
                     color = colors.background,
                     shape = RoundedCornerShape(4.dp)

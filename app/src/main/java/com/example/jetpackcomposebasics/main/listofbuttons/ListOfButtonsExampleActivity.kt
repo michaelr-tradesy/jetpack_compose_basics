@@ -69,10 +69,10 @@ class ListOfButtonsExampleActivity : DefaultActivity() {
         var total by remember {
             mutableStateOf(0)
         }
-        Column(modifier = Modifier.fillMaxHeight()) {
+        Column(modifier = modifier.fillMaxHeight()) {
             NamesList(
                 names = names,
-                modifier = Modifier
+                modifier = modifier
                     .weight(1f)
                     .padding(start = 16.dp, top = 16.dp, end = 16.dp, bottom = 16.dp),
                 callback = { value ->
@@ -115,6 +115,7 @@ class ListOfButtonsExampleActivity : DefaultActivity() {
                 }
 
                 BuildButton(
+                    modifier = modifier,
                     border = BorderStroke(
                         width = 1.dp,
                         Brush.sweepGradient(
@@ -129,8 +130,12 @@ class ListOfButtonsExampleActivity : DefaultActivity() {
                         callback.invoke(abs(Random.nextInt()))
                     },
                     content = {
-                        MySpannedString(text = annotatedString)
-                    })
+                        MySpannedString(
+                            modifier = modifier, 
+                            text = annotatedString
+                        )
+                    }
+                )
                 Divider()
             }
 
@@ -139,7 +144,7 @@ class ListOfButtonsExampleActivity : DefaultActivity() {
 
     @Composable
     private fun BuildButton(
-        modifier: Modifier = Modifier,
+        modifier: Modifier,
         onClick: () -> Unit,
         enabled: Boolean = true,
         interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
@@ -167,7 +172,7 @@ class ListOfButtonsExampleActivity : DefaultActivity() {
     @Composable
     private fun MySpannedString(
         text: AnnotatedString,
-        modifier: Modifier = Modifier,
+        modifier: Modifier,
         textStyle: TextStyle = TextStyle.Default,
         maxLines: Int = Int.MAX_VALUE,
         textOverflow: TextOverflow = TextOverflow.Clip,

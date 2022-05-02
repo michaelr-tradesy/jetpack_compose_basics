@@ -59,8 +59,11 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.ExperimentalUnitApi
 import androidx.compose.ui.unit.dp
+import com.example.jetpackcomposebasics.AppThemeState
 import com.example.jetpackcomposebasics.ComposeFeatureType
 import com.example.jetpackcomposebasics.DefaultActivity
+import com.example.jetpackcomposebasics.SystemUiController
+import com.example.jetpackcomposebasics.appThemeState.AppThemeDataStore
 import com.example.jetpackcomposebasics.ui.theme.ColorPalette
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -92,6 +95,14 @@ class MainActivity : DefaultActivity() {
         showSystemUi = true,
         showBackground = true,
     )
+    @Composable
+    private fun PreviewLightMode() {
+        modifier = modifier
+        appThemeState = remember { mutableStateOf(AppThemeState()) }
+
+        DefaultPreview()
+    }
+
     @Preview(
         fontScale = 1.5f,
         name = "Dark Mode",
@@ -99,6 +110,14 @@ class MainActivity : DefaultActivity() {
         showSystemUi = true,
         showBackground = true
     )
+    @Composable
+    private fun PreviewDarkMode() {
+        modifier = modifier
+        appThemeState = remember { mutableStateOf(AppThemeState(isDarkTheme = true)) }
+
+        DefaultPreview()
+    }
+
     @Composable
     override fun DefaultPreview() {
         viewModel = DefaultMainViewModel()
@@ -142,7 +161,7 @@ class MainActivity : DefaultActivity() {
                     SnackbarHost(it) { data ->
                         // custom snackbar with the custom border
                         Snackbar(
-                            modifier = Modifier,
+                            modifier = modifier,
                             snackbarData = data
                         )
                     }
@@ -226,7 +245,7 @@ class MainActivity : DefaultActivity() {
                 },
                 drawerContent = {
                     Text(
-                        modifier = Modifier
+                        modifier = modifier
                             .padding(16.dp)
                             .clickable {
                                 coroutineScope.launch { scaffoldState.drawerState.close() }
@@ -236,7 +255,7 @@ class MainActivity : DefaultActivity() {
                     )
                     Divider()
                     Text(
-                        modifier = Modifier
+                        modifier = modifier
                             .padding(16.dp)
                             .clickable {
                                 coroutineScope.launch { scaffoldState.drawerState.close() }
@@ -246,7 +265,7 @@ class MainActivity : DefaultActivity() {
                     )
                     Divider()
                     Text(
-                        modifier = Modifier
+                        modifier = modifier
                             .padding(16.dp)
                             .clickable {
                                 coroutineScope.launch { scaffoldState.drawerState.close() }
@@ -291,7 +310,7 @@ class MainActivity : DefaultActivity() {
     @Composable
     fun BuildFloatingActionButton() {
         ExtendedFloatingActionButton(
-            modifier = Modifier,
+            modifier = modifier,
             elevation = elevation(),
             onClick = {
                 coroutineScope.launch {
@@ -329,7 +348,7 @@ class MainActivity : DefaultActivity() {
             items(items = ComposeFeatureType.values()) { nextField ->
                 val text = stringResource(id = nextField.resourceId)
                 Column(
-                    modifier = Modifier
+                    modifier = modifier
                         .semantics { contentDescription = text }
                         .clickable {
                             exampleType.value = nextField
@@ -338,10 +357,10 @@ class MainActivity : DefaultActivity() {
                         .fillMaxHeight(),
                 ) {
                     Text(
-                        modifier = Modifier.padding(16.dp),
+                        modifier = modifier.padding(16.dp),
                         text = text
                     )
-                    Divider(modifier = Modifier)
+                    Divider(modifier = modifier)
                 }
             }
         }

@@ -57,7 +57,7 @@ class FloatingActionButtonExamplesActivity : DefaultActivity() {
     @Composable
     private fun MyScreenContent() {
         Column(
-            modifier = Modifier.fillMaxSize(),
+            modifier = modifier.fillMaxSize(),
             verticalArrangement = Arrangement.SpaceEvenly,
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
@@ -71,23 +71,26 @@ class FloatingActionButtonExamplesActivity : DefaultActivity() {
 
     @Composable
     private fun DefaultFloatingActionButtonComponent() {
-        CreateFloatingActionButton(modifier = Modifier)
+        CreateFloatingActionButton(modifier = modifier)
     }
 
     @Composable
     private fun ColoredFloatingActionButtonComponent() {
-        CreateFloatingActionButton(backgroundColor = Color.Red)
+        CreateFloatingActionButton(
+            modifier = modifier,
+            backgroundColor = Color.Red
+        )
     }
 
     @Composable
     private fun IconFloatingActionButtonComponent() {
         CreateFloatingActionButton(
-            modifier = Modifier.padding(8.dp),
+            modifier = modifier.padding(8.dp),
             content = {
                 Icon(
                     imageVector = Icons.Default.CheckCircle,
                     contentDescription = "Check Circle",
-                    modifier = Modifier.padding(8.dp),
+                    modifier = modifier.padding(8.dp),
                     tint = Color.Yellow
                 )
             }
@@ -98,13 +101,13 @@ class FloatingActionButtonExamplesActivity : DefaultActivity() {
     private fun ShapeFloatingActionButtonComponent() {
         CreateFloatingActionButton(
             shape = RectangleShape,
-            modifier = Modifier.padding(16.dp),
+            modifier = modifier.padding(16.dp),
             backgroundColor = Color.Blue,
             content = {
                 Icon(
                     imageVector = Icons.Default.Call,
                     contentDescription = "Call",
-                    modifier = Modifier.padding(8.dp),
+                    modifier = modifier.padding(8.dp),
                     tint = Color.White
                 )
             }
@@ -114,13 +117,13 @@ class FloatingActionButtonExamplesActivity : DefaultActivity() {
     @Composable
     private fun ElevatedFloatingActionButtonComponent() {
         CreateFloatingActionButton(
-            modifier = Modifier.padding(16.dp),
+            modifier = modifier.padding(16.dp),
             backgroundColor = Color.White,
             content = {
                 Icon(
                     imageVector = Icons.Default.ShoppingCart,
                     contentDescription = "Shopping Cart",
-                    modifier = Modifier.padding(8.dp),
+                    modifier = modifier.padding(8.dp),
                     tint = Color.Red
                 )
             }
@@ -129,7 +132,7 @@ class FloatingActionButtonExamplesActivity : DefaultActivity() {
 
     @Composable
     private fun CreateFloatingActionButton(
-        modifier: Modifier = Modifier,
+        modifier: Modifier,
         onClick: () -> Unit = { },
         interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
         shape: Shape = MaterialTheme.shapes.small.copy(CornerSize(percent = 50)),

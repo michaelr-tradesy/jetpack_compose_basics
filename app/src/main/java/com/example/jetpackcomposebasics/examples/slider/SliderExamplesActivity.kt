@@ -45,7 +45,7 @@ class SliderExamplesActivity : DefaultActivity() {
     @Composable
     private fun MyScreenContent() {
         Column(
-            modifier = Modifier.fillMaxSize(),
+            modifier = modifier.fillMaxSize(),
             verticalArrangement = Arrangement.SpaceEvenly,
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
@@ -58,34 +58,45 @@ class SliderExamplesActivity : DefaultActivity() {
 
     @Composable
     fun SimpleSlider() {
-        Column(modifier = Modifier.padding(8.dp)) {
+        Column(modifier = modifier.padding(8.dp)) {
             Text(text = "Simple Slider")
-            CreateSlider(value = 10f)
+            CreateSlider(
+                modifier = modifier,
+                value = 10f
+            )
         }
     }
 
     @Composable
     fun EnabledSlider() {
-        Column(modifier = Modifier.padding(8.dp)) {
+        Column(modifier = modifier.padding(8.dp)) {
             Text(text = "Enabled Slider")
-            CreateSlider(value = 0f, enabled = true)
+            CreateSlider(
+                modifier = modifier,
+                value = 0f,
+                enabled = true
+            )
         }
     }
 
     @Composable
     fun DisabledSlider() {
-        Column(modifier = Modifier.padding(8.dp)) {
+        Column(modifier = modifier.padding(8.dp)) {
             Text(text = "Disabled Slider")
-            CreateSlider(value = 0f, enabled = false)
+            CreateSlider(
+                modifier = modifier,
+                value = 0f,
+                enabled = false
+            )
         }
     }
 
     @Composable
     fun CheckedThumbColorSlider() {
-        Column(modifier = Modifier.padding(8.dp)) {
+        Column(modifier = modifier.padding(8.dp)) {
             Text(text = "Checked Thumb Color Slider")
             CreateSlider(
-                modifier = Modifier.padding(8.dp),
+                modifier = modifier.padding(8.dp),
                 value = 0f,
                 enabled = true,
                 colors = SliderDefaults.colors(
@@ -99,7 +110,7 @@ class SliderExamplesActivity : DefaultActivity() {
 
     @Composable
     private fun CreateSlider(
-        modifier: Modifier = Modifier,
+        modifier: Modifier,
         value: Float,
         enabled: Boolean = true,
         valueRange: ClosedFloatingPointRange<Float> = 0f..100f,
@@ -110,7 +121,7 @@ class SliderExamplesActivity : DefaultActivity() {
         colors: SliderColors = SliderDefaults.colors()
     ) {
         var sliderValue by remember { mutableStateOf(value) }
-        Card(shape = RoundedCornerShape(4.dp), modifier = Modifier.padding(8.dp)) {
+        Card(shape = RoundedCornerShape(4.dp), modifier = modifier.padding(8.dp)) {
             // A pre-defined composable that's capable of rendering a slider. It
             // honors the Material Design specification.
             Slider(
@@ -128,7 +139,7 @@ class SliderExamplesActivity : DefaultActivity() {
         }
         Text(
             text = "Slider value is %.1f".format(sliderValue),
-            modifier = Modifier.padding(8.dp)
+            modifier = modifier.padding(8.dp)
         )
     }
 }

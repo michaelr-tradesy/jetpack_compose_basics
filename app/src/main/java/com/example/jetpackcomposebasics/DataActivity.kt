@@ -82,11 +82,11 @@ class DataActivity :  DefaultActivity() {
 
     @Composable
     fun Greeting(userInfo: UserInfo) {
-        Row(modifier = Modifier.padding(all = 8.dp)) {
+        Row(modifier = modifier.padding(all = 8.dp)) {
             Image(
                 painter = painterResource(android.R.drawable.ic_delete),
                 contentDescription = userInfo.contentDescription,
-                modifier = Modifier
+                modifier = modifier
                     // Set image size to 40 dp
                     .size(40.dp)
                     // Clip image to be shaped as a circle
@@ -95,7 +95,7 @@ class DataActivity :  DefaultActivity() {
             )
 
             // Add a horizontal space between the image and the column
-            Spacer(modifier = Modifier.width(8.dp))
+            Spacer(modifier = modifier.width(8.dp))
 
             // We keep track if the message is expanded or not in this
             // variable
@@ -107,14 +107,14 @@ class DataActivity :  DefaultActivity() {
             )
 
             // We toggle the isExpanded variable when we click on this Column
-            Column(modifier = Modifier.clickable { isExpanded = !isExpanded }) {
+            Column(modifier = modifier.clickable { isExpanded = !isExpanded }) {
                 Text(
                     text = userInfo.name,
                     color = MaterialTheme.colors.secondaryVariant,
                     style = MaterialTheme.typography.subtitle1
                 )
                 // Add a vertical space between the author and message texts
-                Spacer(modifier = Modifier.height(4.dp))
+                Spacer(modifier = modifier.height(4.dp))
 
                 Text(
                     text = userInfo.location,
@@ -122,7 +122,7 @@ class DataActivity :  DefaultActivity() {
                     style = MaterialTheme.typography.subtitle2
                 )
                 // Add a vertical space between the author and message texts
-                Spacer(modifier = Modifier.height(4.dp))
+                Spacer(modifier = modifier.height(4.dp))
 
                 Surface(shape = MaterialTheme.shapes.medium, elevation = 1.dp) {
                     Text(
@@ -130,7 +130,7 @@ class DataActivity :  DefaultActivity() {
                         // surfaceColor color will be changing gradually from primary to surface
                         color = surfaceColor,
                         // animateContentSize will change the Surface size gradually
-                        modifier = Modifier
+                        modifier = modifier
                             .animateContentSize()
                             .padding(1.dp),
                         // If the message is expanded, we display all its content

@@ -47,7 +47,7 @@ class CheckboxExamplesActivity : DefaultActivity() {
     @Composable
     private fun MyScreenContent() {
         Column(
-            modifier = Modifier.fillMaxSize(),
+            modifier = modifier.fillMaxSize(),
             verticalArrangement = Arrangement.SpaceEvenly,
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
@@ -64,12 +64,18 @@ class CheckboxExamplesActivity : DefaultActivity() {
 
     @Composable
     private fun SimpleCheckbox() {
-        CreateCheckbox(enabled = true)
+        CreateCheckbox(
+            modifier = modifier,
+            enabled = true
+        )
     }
 
     @Composable
     private fun DisabledCheckbox() {
-        CreateCheckbox(enabled = false)
+        CreateCheckbox(
+            modifier = modifier,
+            enabled = false
+        )
     }
 
     //        checkedColor: Color = MaterialTheme.colors.secondary,
@@ -81,6 +87,7 @@ class CheckboxExamplesActivity : DefaultActivity() {
     @Composable
     private fun DisabledColouredCheckbox() {
         CreateCheckbox(
+            modifier = modifier,
             enabled = true,
             colors = colors(disabledColor = Color.LightGray)
         )
@@ -89,6 +96,7 @@ class CheckboxExamplesActivity : DefaultActivity() {
     @Composable
     private fun UncheckedColouredCheckbox() {
         CreateCheckbox(
+            modifier = modifier,
             enabled = true,
             colors = colors(uncheckedColor = Color.Red)
         )
@@ -97,6 +105,7 @@ class CheckboxExamplesActivity : DefaultActivity() {
     @Composable
     private fun CheckedColouredCheckbox() {
         CreateCheckbox(
+            modifier = modifier,
             enabled = true,
             colors = colors(checkedColor = Color.Green)
         )
@@ -105,6 +114,7 @@ class CheckboxExamplesActivity : DefaultActivity() {
     @Composable
     private fun DisabledIndeterminateColouredCheckbox() {
         CreateCheckbox(
+            modifier = modifier,
             checked = true,
             enabled = false,
             colors = colors(
@@ -116,8 +126,9 @@ class CheckboxExamplesActivity : DefaultActivity() {
 
     @Composable
     fun LabelledCheckbox() {
-        Row(modifier = Modifier.padding(8.dp)) {
+        Row(modifier = modifier.padding(8.dp)) {
             CreateCheckbox(
+                modifier = modifier,
                 enabled = true,
                 colors = colors(
                     checkedColor = Color.Green,
@@ -132,7 +143,7 @@ class CheckboxExamplesActivity : DefaultActivity() {
     fun GroupedCheckbox(items: List<String>) {
 
         items.forEach { nextItem ->
-            Row(modifier = Modifier.padding(8.dp)) {
+            Row(modifier = modifier.padding(8.dp)) {
                 val isChecked = remember { mutableStateOf(false) }
 
                 Checkbox(
@@ -152,7 +163,7 @@ class CheckboxExamplesActivity : DefaultActivity() {
 
     @Composable
     private fun CreateCheckbox(
-        modifier: Modifier = Modifier,
+        modifier: Modifier,
         checked: Boolean = false,
         enabled: Boolean = true,
         interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },

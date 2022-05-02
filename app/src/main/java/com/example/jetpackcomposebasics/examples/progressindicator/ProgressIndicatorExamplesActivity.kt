@@ -55,7 +55,7 @@ class ProgressIndicatorExamplesActivity : DefaultActivity() {
         this.observer = remember { mutableStateOf(null) }
 
         Column(
-            modifier = Modifier.fillMaxSize(),
+            modifier = modifier.fillMaxSize(),
             verticalArrangement = Arrangement.SpaceEvenly,
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
@@ -68,13 +68,13 @@ class ProgressIndicatorExamplesActivity : DefaultActivity() {
 
     @Composable
     private fun SimpleLinearProgressIndicator() {
-        CreateLinearProgressIndicator()
+        CreateLinearProgressIndicator(modifier = modifier)
     }
 
     @Composable
     private fun FeaturedLinearProgressIndicator() {
         CreateLinearProgressIndicator(
-            modifier = Modifier.padding(8.dp),
+            modifier = modifier.padding(8.dp),
             color = Color.Green,
             backgroundColor = Color.Red
         )
@@ -82,14 +82,14 @@ class ProgressIndicatorExamplesActivity : DefaultActivity() {
 
     @Composable
     private fun SimpleCircularProgressIndicator() {
-        CreateCircularProgressIndicator()
+        CreateCircularProgressIndicator(modifier = modifier)
     }
 
     @Composable
     private fun FeaturedCircularProgressIndicator() {
         CreateCircularProgressIndicator(
             progress = 0.8f,
-            modifier = Modifier.padding(8.dp),
+            modifier = modifier.padding(8.dp),
             color = Color.Green,
             strokeWidth = 2.dp
         )
@@ -97,7 +97,7 @@ class ProgressIndicatorExamplesActivity : DefaultActivity() {
 
     @Composable
     private fun CreateLinearProgressIndicator(
-        modifier: Modifier = Modifier,
+        modifier: Modifier,
         color: Color = MaterialTheme.colors.primary,
         backgroundColor: Color = color.copy(alpha = ProgressIndicatorDefaults.IndicatorBackgroundOpacity)
     ) {
@@ -110,7 +110,7 @@ class ProgressIndicatorExamplesActivity : DefaultActivity() {
 
     @Composable
     private fun CreateCircularProgressIndicator(
-        modifier: Modifier = Modifier,
+        modifier: Modifier,
         progress: Float = 0.0f,
         color: Color = MaterialTheme.colors.primary,
         strokeWidth: Dp = ProgressIndicatorDefaults.StrokeWidth

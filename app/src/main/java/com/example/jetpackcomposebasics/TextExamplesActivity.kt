@@ -55,10 +55,10 @@ class TextExamplesActivity : DefaultActivity() {
         var total by remember {
             mutableStateOf(0)
         }
-        Column(modifier = Modifier.fillMaxHeight()) {
+        Column(modifier = modifier.fillMaxHeight()) {
             NamesList(
                 names = names,
-                modifier = Modifier.weight(1f)
+                modifier = modifier.weight(1f)
             )
             Counter(
                 total = total,
@@ -100,28 +100,38 @@ class TextExamplesActivity : DefaultActivity() {
                         }
                     }
                 }
-                MySpannedString(text = annotatedString)
+                MySpannedString(
+                    modifier = modifier,
+                    text = annotatedString
+                )
                 Divider()
-                Greeting(text = "Simple Text: $it")
                 Greeting(
+                    modifier = modifier,
+                    text = "Simple Text..."
+                )
+                Greeting(
+                    modifier = modifier,
                     text = "Text with bigger font size",
                     textStyle = TextStyle(
                         fontSize = 24.sp
                     )
                 )
                 Greeting(
+                    modifier = modifier,
                     text = "Text with Red color",
                     textStyle = TextStyle(
                         color = Color.Red
                     )
                 )
                 Greeting(
+                    modifier = modifier,
                     text = "Text in bold",
                     textStyle = TextStyle(
                         fontWeight = FontWeight.Bold
                     )
                 )
                 Greeting(
+                    modifier = modifier,
                     text = "Text in a cursive font family",
                     textStyle = TextStyle(
                         fontFamily = FontFamily.Cursive
@@ -135,19 +145,20 @@ class TextExamplesActivity : DefaultActivity() {
                         fontStyle = FontStyle.Italic
                     ),
                     maxLines = 2,
-                    modifier = Modifier.padding(start = 24.dp, top = 24.dp, end = 24.dp),
+                    modifier = modifier.padding(start = 24.dp, top = 24.dp, end = 24.dp),
                     textOverflow = TextOverflow.Ellipsis
                 )
 
-                Spacer(modifier = Modifier.padding(top = 8.dp))
+                Spacer(modifier = modifier.padding(top = 8.dp))
                 Divider(color = Color.LightGray)
 
-                Greeting(text = "Text with Padding!", modifier = Modifier.padding(16.dp))
+                Greeting(text = "Text with Padding!", modifier = modifier.padding(16.dp))
 
                 Divider(color = Color.DarkGray)
 
-                Row(modifier = Modifier.fillMaxWidth()) {
+                Row(modifier = modifier.fillMaxWidth()) {
                     Greeting(
+                        modifier = modifier,
                         text = "Text with an underline",
                         textStyle = TextStyle(
                             textDecoration = TextDecoration.Underline,
@@ -156,6 +167,7 @@ class TextExamplesActivity : DefaultActivity() {
                     )
 
                     Greeting(
+                        modifier = modifier,
                         text = "Text with letter spacing",
                         textStyle = TextStyle(
                             textAlign = TextAlign.Center,
@@ -172,7 +184,7 @@ class TextExamplesActivity : DefaultActivity() {
     @Composable
     private fun Greeting(
         text: String,
-        modifier: Modifier = Modifier,
+        modifier: Modifier,
         textStyle: TextStyle = TextStyle.Default,
         maxLines: Int = Int.MAX_VALUE,
         textOverflow: TextOverflow = TextOverflow.Clip,
@@ -213,7 +225,7 @@ class TextExamplesActivity : DefaultActivity() {
     @Composable
     private fun MySpannedString(
         text: AnnotatedString,
-        modifier: Modifier = Modifier,
+        modifier: Modifier,
         textStyle: TextStyle = TextStyle.Default,
         maxLines: Int = Int.MAX_VALUE,
         textOverflow: TextOverflow = TextOverflow.Clip,

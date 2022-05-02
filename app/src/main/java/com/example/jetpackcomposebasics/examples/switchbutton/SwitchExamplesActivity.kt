@@ -43,7 +43,7 @@ class SwitchExamplesActivity : DefaultActivity() {
     @Composable
     private fun MyScreenContent() {
         Column(
-            modifier = Modifier.fillMaxSize(),
+            modifier = modifier.fillMaxSize(),
             verticalArrangement = Arrangement.SpaceEvenly,
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
@@ -58,7 +58,7 @@ class SwitchExamplesActivity : DefaultActivity() {
     fun SimpleSwitch() {
         val mRemember = remember { mutableStateOf(false) }
 
-        Row(modifier = Modifier.padding(8.dp)) {
+        Row(modifier = modifier.padding(8.dp)) {
             Switch(checked = mRemember.value, onCheckedChange = { mRemember.value = it })
             Text(text = "Simple Switch")
         }
@@ -68,7 +68,7 @@ class SwitchExamplesActivity : DefaultActivity() {
     fun EnabledSwitch() {
         val mRemember = remember { mutableStateOf(false) }
 
-        Row(modifier = Modifier.padding(8.dp)) {
+        Row(modifier = modifier.padding(8.dp)) {
             Switch(
                 checked = mRemember.value,
                 onCheckedChange = { mRemember.value = it },
@@ -82,7 +82,7 @@ class SwitchExamplesActivity : DefaultActivity() {
     fun DisabledSwitch() {
         val mRemember = remember { mutableStateOf(false) }
 
-        Row(modifier = Modifier.padding(8.dp)) {
+        Row(modifier = modifier.padding(8.dp)) {
             Switch(
                 checked = mRemember.value,
                 onCheckedChange = { mRemember.value = it },
@@ -96,7 +96,7 @@ class SwitchExamplesActivity : DefaultActivity() {
     fun CheckedThumbColorSwitch() {
         val mRemember = remember { mutableStateOf(false) }
 
-        Row(modifier = Modifier.padding(8.dp)) {
+        Row(modifier = modifier.padding(8.dp)) {
             Switch(
                 checked = mRemember.value,
                 onCheckedChange = { mRemember.value = it },
@@ -104,7 +104,7 @@ class SwitchExamplesActivity : DefaultActivity() {
                 colors = SwitchDefaults.colors(
                     checkedThumbColor = Color.Magenta
                 ),
-                modifier = Modifier.padding(8.dp)
+                modifier = modifier.padding(8.dp)
             )
             Text(text = "Checked Thumb Color Switch")
         }

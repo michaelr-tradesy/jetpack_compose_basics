@@ -28,11 +28,11 @@ import kotlinx.coroutines.launch
 abstract class DefaultActivity : ComponentActivity() {
 
     private var isDarkTheme : Boolean = false
-    private lateinit var modifier: Modifier
-    private lateinit var systemUiController : SystemUiController
+    private var systemUiController : SystemUiController? = null
     private lateinit var colorPalette : ColorPalette
     private lateinit var appThemeDataStore : AppThemeDataStore
     private var job: Job? = null
+    protected lateinit var modifier: Modifier
     protected lateinit var appThemeState : MutableState<AppThemeState>
     protected lateinit var colors : Colors
 
@@ -42,6 +42,7 @@ abstract class DefaultActivity : ComponentActivity() {
         ComposeView(this).also {
             setContentView(it)
         }.setContent {
+            modifier = Modifier
             appThemeDataStore = AppThemeDataStore.instance
             systemUiController = remember { SystemUiController(window) }
             appThemeState = remember { mutableStateOf(AppThemeState()) }
@@ -73,7 +74,7 @@ abstract class DefaultActivity : ComponentActivity() {
             appThemeState = appThemeState.value
         ) {
             Surface(
-                modifier = Modifier.fillMaxSize()
+                modifier = modifier.fillMaxSize()
                     .background(
                         color = colors.background,
                         shape = RoundedCornerShape(4.dp)

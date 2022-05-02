@@ -51,7 +51,7 @@ class DividerExamplesActivity : DefaultActivity() {
     @Composable
     private fun MyScreenContent() {
         Column(
-            modifier = Modifier.fillMaxSize(),
+            modifier = modifier.fillMaxSize(),
             verticalArrangement = Arrangement.SpaceEvenly,
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
@@ -61,28 +61,37 @@ class DividerExamplesActivity : DefaultActivity() {
 
     @Composable
     private fun DividerComponent() {
-        CreateDivider(modifier = Modifier.padding(16.dp))
+        CreateDivider(modifier = modifier.padding(16.dp))
     }
 
     @Composable
     private fun ColoredDividerComponent() {
-        CreateDivider(color = Color.Red)
+        CreateDivider(
+            modifier = modifier,
+            color = Color.Red
+        )
     }
 
     @Composable
     private fun ThicknessDividerComponent() {
-        CreateDivider(thickness = 4.dp)
+        CreateDivider(
+            modifier = modifier,
+            thickness = 4.dp
+        )
     }
 
     @Composable
     private fun StartIndentDividerComponent() {
-        CreateDivider(startIndent = 16.dp)
+        CreateDivider(
+            modifier = modifier,
+            startIndent = 16.dp
+        )
     }
 
     @Composable
     private fun AllInOneDividerComponent() {
         CreateDivider(
-            modifier = Modifier.padding(16.dp),
+            modifier = modifier.padding(16.dp),
             color = Color.Blue,
             thickness = 2.dp,
             startIndent = 8.dp
@@ -91,7 +100,7 @@ class DividerExamplesActivity : DefaultActivity() {
 
     @Composable
     private fun CreateDivider(
-        modifier: Modifier = Modifier,
+        modifier: Modifier,
         color: Color = if(isSystemInDarkTheme()) Color.Black else Color.White,
         thickness: Dp = 1.dp,
         startIndent: Dp = 0.dp

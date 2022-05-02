@@ -65,7 +65,7 @@ class ButtonExamplesActivity : DefaultActivity() {
     private fun MyScreenContent() {
         val value = remember { mutableStateOf(0) }
 
-        Column(modifier = Modifier.fillMaxSize()) {
+        Column(modifier = modifier.fillMaxSize()) {
 //            SimpleButtonComponent()
 //            BorderedButtonComponent()
             RoundCorneredButtonComponent()
@@ -75,9 +75,11 @@ class ButtonExamplesActivity : DefaultActivity() {
             TextButtonComponent()
             IconToggleButtonComponent()
             IconButtonComponent()
-            RepeatingButton(onClick = { value.value += 1 }) {
+            RepeatingButton(
+                modifier = modifier,
+                onClick = { value.value += 1 }) {
                 Text(
-                    modifier = Modifier.padding(16.dp),
+                    modifier = modifier.padding(16.dp),
                     text = "Repeating Button Click Count=[${value.value}]"
                 )
             }
@@ -86,7 +88,7 @@ class ButtonExamplesActivity : DefaultActivity() {
 
     @Composable
     private fun RepeatingButton(
-        modifier: Modifier = Modifier,
+        modifier: Modifier,
         onClick: () -> Unit,
         enabled: Boolean = true,
         interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
@@ -159,10 +161,10 @@ class ButtonExamplesActivity : DefaultActivity() {
     @Composable
     private fun ButtonComponentWithElements(
         shape: Shape,
-        text: String
+        @Suppress("SameParameterValue") text: String
     ) {
         CreateTextButtonComponent(
-            modifier = Modifier.padding(8.dp),
+            modifier = modifier.padding(8.dp),
             border = BorderStroke(1.dp, SolidColor(Color.Blue)),
             onClick = { showToastExample() },
             shape = shape,
@@ -180,7 +182,7 @@ class ButtonExamplesActivity : DefaultActivity() {
             )
         ) {
             Text(
-                modifier = Modifier
+                modifier = modifier
                     .padding(16.dp)
                     .clickable { showToastExample() },
                 text = text
@@ -201,7 +203,7 @@ class ButtonExamplesActivity : DefaultActivity() {
             null
         }
         CreateTextButtonComponent(
-            modifier = Modifier.padding(8.dp),
+            modifier = modifier.padding(8.dp),
             enabled = false,
             border = border,
             onClick = { showToastExample() },
@@ -219,7 +221,7 @@ class ButtonExamplesActivity : DefaultActivity() {
             )
         ) {
             Text(
-                modifier = Modifier
+                modifier = modifier
                     .padding(16.dp)
                     .clickable { showToastExample() },
                 text = "Disabled Button Example"
@@ -230,7 +232,7 @@ class ButtonExamplesActivity : DefaultActivity() {
     @Composable
     private fun OutlinedButtonComponent() {
         CreateTextButtonComponent(
-            modifier = Modifier.padding(8.dp),
+            modifier = modifier.padding(8.dp),
             border = BorderStroke(1.dp, SolidColor(Color.Blue)),
             onClick = { showToastExample() },
             elevation = elevation(
@@ -247,7 +249,7 @@ class ButtonExamplesActivity : DefaultActivity() {
             )
         ) {
             Text(
-                modifier = Modifier
+                modifier = modifier
                     .padding(16.dp)
                     .clickable { showToastExample() },
                 text = "Outlined Button Example"
@@ -258,7 +260,7 @@ class ButtonExamplesActivity : DefaultActivity() {
     @Composable
     private fun TextButtonComponent() {
         CreateTextButtonComponent(
-            modifier = Modifier.padding(8.dp),
+            modifier = modifier.padding(8.dp),
             onClick = { showToastExample() },
             elevation = elevation(
                 defaultElevation = 2.dp,
@@ -273,7 +275,7 @@ class ButtonExamplesActivity : DefaultActivity() {
             )
         ) {
             Text(
-                modifier = Modifier
+                modifier = modifier
                     .padding(16.dp)
                     .clickable { showToastExample() },
                 text = "Text Button Example"
@@ -283,7 +285,7 @@ class ButtonExamplesActivity : DefaultActivity() {
 
     @Composable
     private fun CreateTextButtonComponent(
-        modifier: Modifier = Modifier,
+        modifier: Modifier,
         border: BorderStroke? = null,
         onClick: () -> Unit,
         enabled: Boolean = true,
@@ -314,12 +316,12 @@ class ButtonExamplesActivity : DefaultActivity() {
             onClick = {
 
             },
-            modifier = Modifier.padding(0.dp),
+            modifier = modifier.padding(0.dp),
         ) {
             Icon(
                 Icons.Rounded.Home,
                 contentDescription = "Icon Button",
-                modifier = Modifier
+                modifier = modifier
                     // Set image size to 40 dp
                     .size(40.dp)
                     // Clip image to be shaped as a circle
@@ -332,7 +334,7 @@ class ButtonExamplesActivity : DefaultActivity() {
     @Composable
     private fun IconToggleButtonComponent() {
         IconToggleButton(
-            modifier = Modifier.padding(0.dp),
+            modifier = modifier.padding(0.dp),
             checked = false,
             onCheckedChange = {
 
@@ -342,7 +344,7 @@ class ButtonExamplesActivity : DefaultActivity() {
             Image(
                 painter = painterResource(android.R.drawable.ic_delete),
                 contentDescription = "Icon Toggle Button",
-                modifier = Modifier
+                modifier = modifier
                     // Set image size to 40 dp
                     .size(40.dp)
                     // Clip image to be shaped as a circle
