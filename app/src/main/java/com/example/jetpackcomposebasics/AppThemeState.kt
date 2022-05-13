@@ -9,5 +9,6 @@ import com.example.jetpackcomposebasics.ui.theme.ColorPalette
 @Parcelize
 data class AppThemeState(
     var isDarkTheme: Boolean = false,
+    var isSystemOverrideEnabled: Boolean = false,
     var colorPalette: ColorPalette = ColorPalette.Bamboo
 ) : Parcelable

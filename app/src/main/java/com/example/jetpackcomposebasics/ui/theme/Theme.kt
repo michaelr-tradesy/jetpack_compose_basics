@@ -297,7 +297,9 @@ fun JetpackComposeBasicsTheme(
     appThemeState: AppThemeState,
     content: @Composable () -> Unit
 ) {
-    val isDarkTheme = appThemeState.isDarkTheme
+    val isDarkTheme = (appThemeState.isSystemOverrideEnabled && isSystemInDarkTheme())
+            || (!appThemeState.isSystemOverrideEnabled && appThemeState.isDarkTheme)
+    val isSystemOverrideEnabled = appThemeState.isSystemOverrideEnabled
     val colorPalette = appThemeState.colorPalette
     val colors = getAppThemeColors(isDarkTheme, colorPalette)
 

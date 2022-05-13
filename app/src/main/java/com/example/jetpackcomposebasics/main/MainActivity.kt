@@ -7,12 +7,15 @@ import androidx.compose.animation.core.Animatable
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.CornerBasedShape
 import androidx.compose.foundation.shape.CutCornerShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.AlertDialog
@@ -33,14 +36,18 @@ import androidx.compose.material.ScaffoldState
 import androidx.compose.material.Snackbar
 import androidx.compose.material.SnackbarDuration
 import androidx.compose.material.SnackbarHost
+import androidx.compose.material.SnackbarHostState
 import androidx.compose.material.SnackbarResult
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.DarkMode
 import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.LightMode
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.PlayCircle
+import androidx.compose.material.icons.filled.Smartphone
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
@@ -62,8 +69,7 @@ import androidx.compose.ui.unit.dp
 import com.example.jetpackcomposebasics.AppThemeState
 import com.example.jetpackcomposebasics.ComposeFeatureType
 import com.example.jetpackcomposebasics.DefaultActivity
-import com.example.jetpackcomposebasics.SystemUiController
-import com.example.jetpackcomposebasics.appThemeState.AppThemeDataStore
+import com.example.jetpackcomposebasics.R
 import com.example.jetpackcomposebasics.ui.theme.ColorPalette
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -81,7 +87,6 @@ class MainActivity : DefaultActivity() {
     private lateinit var clickCount: MutableState<Int>
     private lateinit var viewModel: MainViewModel
     private lateinit var expanded: MutableState<Boolean>
-    private lateinit var liked: MutableState<Boolean>
     private lateinit var result: MutableState<String>
 
 
@@ -97,7 +102,7 @@ class MainActivity : DefaultActivity() {
     )
     @Composable
     private fun PreviewLightMode() {
-        modifier = modifier
+        modifier = Modifier
         appThemeState = remember { mutableStateOf(AppThemeState()) }
 
         DefaultPreview()
@@ -112,7 +117,7 @@ class MainActivity : DefaultActivity() {
     )
     @Composable
     private fun PreviewDarkMode() {
-        modifier = modifier
+        modifier = Modifier
         appThemeState = remember { mutableStateOf(AppThemeState(isDarkTheme = true)) }
 
         DefaultPreview()
@@ -147,7 +152,6 @@ class MainActivity : DefaultActivity() {
         }
 
         expanded = rememberSaveable { mutableStateOf(false) }
-        liked = rememberSaveable { mutableStateOf(true) }
         result = rememberSaveable { mutableStateOf("") }
         scaffoldState = rememberScaffoldState()
         coroutineScope = rememberCoroutineScope()
@@ -156,141 +160,185 @@ class MainActivity : DefaultActivity() {
         MyApp {
             Scaffold(
                 scaffoldState = scaffoldState,
-                snackbarHost = {
-                    // reuse default SnackbarHost to have default animation and timing handling
-                    SnackbarHost(it) { data ->
-                        // custom snackbar with the custom border
-                        Snackbar(
-                            modifier = modifier,
-                            snackbarData = data
-                        )
-                    }
-                },
+                snackbarHost = createSnackBarHost(),
                 topBar = {
-                    TopAppBar(
-                        title = { Text("${exampleType.value}") },
-                        navigationIcon = {
-                            // navigation icon is use
-                            // for drawer icon.
-                            IconButton(onClick = {
-                                coroutineScope.launch { scaffoldState.drawerState.open() }
-                            }) {
-                                Icon(Icons.Filled.Menu, "menu")
-                            }
-                        },
-                        actions = {
-                            IconButton(onClick = {
-                                result.value = " Play icon clicked"
-                            }) {
-                                Icon(Icons.Filled.PlayCircle, contentDescription = "")
-                            }
-
-                            IconToggleButton(
-                                checked = liked.value,
-                                onCheckedChange = {
-                                    liked.value = it
-                                    if (liked.value) {
-                                        result.value = "Liked"
-                                    } else {
-                                        result.value = "Unliked"
-                                    }
-                                    newAppThemeState(appThemeState.value.copy(isDarkTheme = it))
-                                }
-                            ) {
-                                val tint by animateColorAsState(
-                                    if (liked.value) Color(0xFF7BB661)
-                                    else Color.LightGray
-                                )
-                                Icon(
-                                    Icons.Filled.Favorite,
-                                    contentDescription = "Localized description",
-                                    tint = tint
-                                )
-                            }
-
-                            Box(
-                                Modifier
-                                    .wrapContentSize(Alignment.TopEnd)
-                            ) {
-                                IconButton(onClick = {
-                                    expanded.value = true
-                                    result.value = "More icon clicked"
-                                }) {
-                                    Icon(
-                                        Icons.Filled.MoreVert,
-                                        contentDescription = "Localized description"
-                                    )
-                                }
-
-                                DropdownMenu(
-                                    expanded = expanded.value,
-                                    onDismissRequest = { expanded.value = false },
-                                ) {
-                                    LoadColorPaletteDropdownMenuItems()
-                                }
-                            }
-                        }
-                    )
+                    CreateTopBar()
                 },
                 bottomBar = {
-                    BottomAppBar(cutoutShape = fabShape) {
-                        IconButton(
-                            onClick = {
-                                coroutineScope.launch { scaffoldState.drawerState.open() }
-                            }
-                        ) {
-                            Icon(Icons.Filled.Menu, contentDescription = "Menu")
-                        }
-                    }
+                    CreateBottomBar(fabShape)
                 },
-                drawerContent = {
-                    Text(
-                        modifier = modifier
-                            .padding(16.dp)
-                            .clickable {
-                                coroutineScope.launch { scaffoldState.drawerState.close() }
-                                showToastExample()
-                            },
-                        text = "Drawer Option 1"
-                    )
-                    Divider()
-                    Text(
-                        modifier = modifier
-                            .padding(16.dp)
-                            .clickable {
-                                coroutineScope.launch { scaffoldState.drawerState.close() }
-                                showToastExample()
-                            },
-                        text = "Drawer Option 2"
-                    )
-                    Divider()
-                    Text(
-                        modifier = modifier
-                            .padding(16.dp)
-                            .clickable {
-                                coroutineScope.launch { scaffoldState.drawerState.close() }
-                                showToastExample()
-                            },
-                        text = "Drawer Option 3"
-                    )
-                    Divider()
-                    // Drawer items
-                },
+                drawerContent = createDrawerContent(),
                 floatingActionButton = {
                     BuildFloatingActionButton()
                 },
                 floatingActionButtonPosition = FabPosition.Center,
                 drawerGesturesEnabled = true,
-                isFloatingActionButtonDocked = true,
+                isFloatingActionButtonDocked = true, content = createScaffoldContent(),
+            )
+        }
+    }
+
+    @Composable
+    private fun createSnackBarHost(): @Composable (SnackbarHostState) -> Unit =
+        {
+            // reuse default SnackbarHost to have default animation and timing handling
+            SnackbarHost(it) { data ->
+                // custom snackbar with the custom border
+                Snackbar(
+                    modifier = modifier,
+                    snackbarData = data
+                )
+            }
+        }
+
+    @Composable
+    private fun CreateTopBar() {
+        TopAppBar(
+            title = { Text("${exampleType.value}") },
+            navigationIcon = {
+                // navigation icon is use
+                // for drawer icon.
+                IconButton(onClick = {
+                    coroutineScope.launch { scaffoldState.drawerState.open() }
+                }) {
+                    Icon(Icons.Filled.Menu, "menu")
+                }
+            },
+            actions = {
+                val isDarkTheme = appThemeState.value.isDarkTheme
+                val isSystemOverrideEnabled = appThemeState.value.isSystemOverrideEnabled
+
+                IconToggleButton(
+                    checked = isSystemOverrideEnabled,
+                    onCheckedChange = {
+                        newAppThemeState(appThemeState.value.copy(isSystemOverrideEnabled = it))
+                        if (isSystemOverrideEnabled) {
+                            result.value = getString(R.string.system_override_enabled)
+                        } else {
+                            result.value = getString(R.string.system_override_disabled)
+                        }
+                    }
+                ) {
+                    val tint by animateColorAsState(
+                        if (isSystemOverrideEnabled) Color(0xFF7BB661)
+                        else Color.LightGray
+                    )
+                    Icon(
+                        Icons.Filled.Smartphone,
+                        contentDescription = stringResource(id = R.string.system_override),
+                        tint = tint
+                    )
+                }
+
+                IconToggleButton(
+                    checked = isDarkTheme,
+                    onCheckedChange = {
+                        newAppThemeState(appThemeState.value.copy(isDarkTheme = it))
+                        if (isDarkTheme) {
+                            result.value = getString(R.string.dark_mode_enabled)
+                        } else {
+                            result.value = getString(R.string.dark_mode_disabled)
+                        }
+                    }
+                ) {
+                    val tint by animateColorAsState(
+                        if (isDarkTheme) Color(0xFF7BB661)
+                        else Color.LightGray
+                    )
+                    Icon(
+                        if (isDarkTheme) {
+                            Icons.Filled.DarkMode
+                        } else {
+                            Icons.Filled.LightMode
+                        },
+                        contentDescription = stringResource(id = R.string.dark_mode),
+                        tint = tint
+                    )
+                }
+
+                Box(
+                    Modifier
+                        .wrapContentSize(Alignment.TopEnd)
+                ) {
+                    IconButton(onClick = {
+                        expanded.value = true
+                        result.value = "More icon clicked"
+                    }) {
+                        Icon(
+                            Icons.Filled.MoreVert,
+                            contentDescription = "Localized description"
+                        )
+                    }
+
+                    DropdownMenu(
+                        expanded = expanded.value,
+                        onDismissRequest = { expanded.value = false },
+                    ) {
+                        LoadColorPaletteDropdownMenuItems()
+                    }
+                }
+            }
+        )
+    }
+
+    @Composable
+    private fun CreateBottomBar(fabShape: CornerBasedShape) {
+        BottomAppBar(cutoutShape = fabShape) {
+            IconButton(
+                onClick = {
+                    coroutineScope.launch { scaffoldState.drawerState.open() }
+                }
             ) {
-                // Screen content
-                // reference:
-                // https://github.com/Foso/Jetpack-Compose-Playground/tree/master/mysamples/src/main/java/de/jensklingenberg/jetpackcomposeplayground/mysamples/github/material
-                ShowAlertDialogExample()
-                MyScreenContent()
+                Icon(Icons.Filled.Menu, contentDescription = "Menu")
             }
         }
     }
+
+    @Composable
+    private fun createDrawerContent(): @Composable() (ColumnScope.() -> Unit) =
+        {
+            Text(
+                modifier = modifier
+                    .padding(16.dp)
+                    .clickable {
+                        coroutineScope.launch { scaffoldState.drawerState.close() }
+                        showToastExample()
+                    },
+                text = "Drawer Option 1"
+            )
+            Divider()
+            Text(
+                modifier = modifier
+                    .padding(16.dp)
+                    .clickable {
+                        coroutineScope.launch { scaffoldState.drawerState.close() }
+                        showToastExample()
+                    },
+                text = "Drawer Option 2"
+            )
+            Divider()
+            Text(
+                modifier = modifier
+                    .padding(16.dp)
+                    .clickable {
+                        coroutineScope.launch { scaffoldState.drawerState.close() }
+                        showToastExample()
+                    },
+                text = "Drawer Option 3"
+            )
+            Divider()
+            // Drawer items
+        }
+
+    @Composable
+    private fun createScaffoldContent(): @Composable (PaddingValues) -> Unit =
+        {
+            // Screen content
+            // reference:
+            // https://github.com/Foso/Jetpack-Compose-Playground/tree/master/mysamples/src/main/java/de/jensklingenberg/jetpackcomposeplayground/mysamples/github/material
+            ShowAlertDialogExample()
+            MyScreenContent()
+        }
 
     @Composable
     private fun LoadColorPaletteDropdownMenuItems() {

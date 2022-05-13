@@ -55,4 +55,10 @@
     <string name="TriStateCheckbox">TriStateCheckbox Examples</string>
     <string name="UiGraphics">UiGraphics Examples</string>
     <string name="UiUtil">UiUtil Examples</string>
+    <string name="dark_mode">Dark Mode</string>
+    <string name="dark_mode_enabled">Dark Mode Enabled</string>
+    <string name="dark_mode_disabled">Dark Mode Disabled</string>
+    <string name="system_override_enabled">System Override Enabled</string>
+    <string name="system_override_disabled">System Override Disabled</string>
+    <string name="system_override">System Override</string>
 </resources>
