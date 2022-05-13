@@ -13,6 +13,7 @@ import androidx.compose.material.icons.filled.Call
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -22,6 +23,7 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.ExperimentalUnitApi
 import androidx.compose.ui.unit.dp
+import com.example.jetpackcomposebasics.AppThemeState
 import com.example.jetpackcomposebasics.DefaultActivity
 import com.example.jetpackcomposebasics.examples.button.ButtonExamplesViewModel
 import com.example.jetpackcomposebasics.examples.button.DefaultButtonExamplesViewModel
@@ -37,8 +39,16 @@ class FloatingActionButtonExamplesActivity : DefaultActivity() {
         name = "Light Mode",
         uiMode = Configuration.UI_MODE_NIGHT_NO,
         showSystemUi = true,
-        showBackground = true
+        showBackground = true,
     )
+    @Composable
+    private fun PreviewLightMode() {
+        modifier = Modifier
+        appThemeState = remember { mutableStateOf(AppThemeState()) }
+
+        DefaultPreview()
+    }
+
     @Preview(
         fontScale = 1.5f,
         name = "Dark Mode",
@@ -46,6 +56,14 @@ class FloatingActionButtonExamplesActivity : DefaultActivity() {
         showSystemUi = true,
         showBackground = true
     )
+    @Composable
+    private fun PreviewDarkMode() {
+        modifier = Modifier
+        appThemeState = remember { mutableStateOf(AppThemeState(isDarkTheme = true)) }
+
+        DefaultPreview()
+    }
+
     @Composable
     override fun DefaultPreview() {
         viewModel = DefaultButtonExamplesViewModel()
