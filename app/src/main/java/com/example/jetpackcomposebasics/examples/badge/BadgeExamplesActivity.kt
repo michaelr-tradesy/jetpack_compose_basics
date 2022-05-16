@@ -14,6 +14,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.ExperimentalUnitApi
 import com.example.jetpackcomposebasics.AppThemeState
 import com.example.jetpackcomposebasics.DefaultActivity
+import androidx.compose.material.Badge
+import androidx.compose.material.BadgedBox
+import androidx.compose.material.BottomNavigation
+import androidx.compose.material.BottomNavigationItem
+import androidx.compose.material.Icon
+import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
 
 @ExperimentalUnitApi
 class BadgeExamplesActivity : DefaultActivity() {
@@ -57,12 +65,19 @@ class BadgeExamplesActivity : DefaultActivity() {
 
     @Composable
     private fun MyScreenContent() {
-        Column(
-            modifier = modifier.fillMaxSize(),
-            verticalArrangement = Arrangement.SpaceEvenly,
-            horizontalAlignment = Alignment.CenterHorizontally,
-        ) {
-            Text("Not Yet Implemented...")
+        BottomNavigation {
+            BottomNavigationItem(
+                icon = {
+                    BadgedBox(badge = { Badge { Text("8") } }) {
+                        Icon(
+                            Icons.Filled.Favorite,
+                            contentDescription = "Favorite"
+                        )
+                    }
+                },
+                selected = false,
+                onClick = {}
+            )
         }
     }
 }
